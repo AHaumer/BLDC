@@ -8,8 +8,9 @@ model DemoBLDCwithPWM "Test example: Brushless DC machine drive"
   parameter SI.AngularVelocity wNominal(displayUnit="rpm")=2*pi*smpmData.fsNominal/smpmData.p "Nominal speed";
   parameter SI.Torque tauNominal=181.4 "Nominal torque";
   parameter SI.Inertia JLoad=smpmData.Jr "Load inertia";
-  Modelica.Electrical.Machines.BasicMachines.SynchronousMachines.SM_PermanentMagnet
+  Modelica.Magnetic.FundamentalWave.BasicMachines.SynchronousMachines.SM_PermanentMagnet
     smpm(
+    m=m,
     p=smpmData.p,
     fsNominal=smpmData.fsNominal,
     Rs=smpmData.Rs,
@@ -66,7 +67,8 @@ model DemoBLDCwithPWM "Test example: Brushless DC machine drive"
   Modelica.Electrical.Analog.Sources.ConstantVoltage
                                                    constantVoltage(V=VDC)
     annotation (Placement(transformation(extent={{20,40},{0,60}})));
-  Utilities.ElectronicCommutator3phase electronicCommutator(useConstantPWM=false)
+  Utilities.ElectronicCommutator       electronicCommutator(m=m,
+                                                            useConstantPWM=false)
     annotation (Placement(transformation(extent={{-30,10},{-10,30}})));
   Modelica.Blocks.Sources.Ramp voltageRamp(
     height=VDC,
@@ -81,7 +83,7 @@ model DemoBLDCwithPWM "Test example: Brushless DC machine drive"
     offsetTorque=0,
     startTime=1)
     annotation (Placement(transformation(extent={{90,-50},{70,-30}})));
-  Modelica.Electrical.Machines.Sensors.CurrentQuasiRMSSensor currentRMSSensor
+  Modelica.Electrical.Polyphase.Sensors.CurrentQuasiRMSSensor currentRMSSensor
     annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=90,
@@ -148,6 +150,11 @@ After the machine ha accelerated, a load torque step is applied.
 </p>
 <p>
 Plot the machine's speed <code>smpm.wMechanical</code>, the electrical torque <code>smpm.tauElectrical</code> and the quasi-RMS current <code>quasiRMSsensor.I</code>.
+</p>
+<h4>Note:</h4>
+<p>
+Normally, the DC voltage is higher than in this example, and the duty cacle is limited slightly below 1 
+to avoid constant switching state of the transistors but to keep pulse voltage.
 </p>
 <h4>Note:</h4>
 <p>

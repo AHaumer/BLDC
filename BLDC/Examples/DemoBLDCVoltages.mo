@@ -3,7 +3,7 @@ model DemoBLDCVoltages "Test example: Demonstrate BLDC voltages"
   extends Modelica.Icons.Example;
   import Modelica.Units.SI;
   import Modelica.Constants.pi;
-  constant Integer m=3 "Number of phases";
+  parameter Integer m=5 "Number of phases";
   parameter Integer p(final min=1)=2 "Number of pole pairs";
   parameter SI.Voltage VDC=100*Modelica.Electrical.Polyphase.Functions.factorY2DC(m) "Nominal DC voltage";
   parameter SI.Frequency fNominal=50 "Nominal frequqncy";
@@ -16,7 +16,7 @@ model DemoBLDCVoltages "Test example: Demonstrate BLDC voltages"
         extent={{-10,-10},{10,10}},
         rotation=180,
         origin={-50,20})));
-  BLDC.Utilities.ElectronicCommutator3phase electronicCommutator
+  Utilities.ElectronicCommutator            electronicCommutator(m=m)
     annotation (Placement(transformation(extent={{-40,30},{-20,50}})));
   Modelica.Electrical.PowerConverters.DCAC.Polyphase2Level inverter(m=m)
     annotation (Placement(transformation(
@@ -40,7 +40,7 @@ model DemoBLDCVoltages "Test example: Demonstrate BLDC voltages"
         extent={{-10,-10},{10,10}},
         rotation=270,
         origin={0,-20})));
-  Modelica.Electrical.Machines.SpacePhasors.Blocks.ToSpacePhasor toSpacePhasor
+  Modelica.Electrical.Machines.SpacePhasors.Blocks.ToSpacePhasor toSpacePhasor(m=m)
     annotation (Placement(transformation(extent={{20,0},{40,20}})));
   Modelica.Electrical.Machines.SpacePhasors.Blocks.Rotator rotator
     annotation (Placement(transformation(extent={{50,0},{70,20}})));

@@ -4,7 +4,7 @@ model DemoElectronicCommutator
   extends Modelica.Icons.Example;
   import Modelica.Units.SI;
   import Modelica.Constants.pi;
-  constant Integer m=3 "Number of phases";
+  constant Integer m=5 "Number of phases";
   parameter Integer p(final min=1)=2 "Number of pole pairs";
   parameter SI.Frequency fNominal=50 "Nominal frequqncy";
   parameter SI.AngularVelocity wNominal(displayUnit="rpm")=2*pi*fNominal/p "Nominal speed";

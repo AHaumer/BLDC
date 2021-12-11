@@ -7,7 +7,7 @@ class ReleaseNotes "Release Notes"
 <ul>
 <li>improved CommonBlocks.IntervalTest</li>
 <li>improved Utilities.ElectronicCommutator3phase</li>
-<li>prepared polyphase Utilities.ElectronicCommutator <code>m&gt;3</code></li>
+<li>implemented polyphase Utilities.ElectronicCommutator <code>m&gt;3</code></li>
 <li>still to do: direction of rotation from hall signals</li>
 </ul>
 

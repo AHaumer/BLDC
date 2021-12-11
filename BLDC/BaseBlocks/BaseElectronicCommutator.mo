@@ -34,11 +34,7 @@ equation
         Line(points={{-60,-10},{-20,-10},{-20,10},{40,10},{40,-10},{60,-10}},
             color={255,0,255}),
         Line(points={{-60,-30},{-40,-30},{-40,-50},{20,-50},{20,-30},{60,-30}},
-            color={255,0,255}),
-        Text(
-          extent={{-100,-70},{100,-90}},
-          textColor={0,0,0},
-          textString="m=%m")}),                                  Diagram(
+            color={255,0,255})}),                                Diagram(
         coordinateSystem(preserveAspectRatio=false)),
     Documentation(info="<html>
 <p>
