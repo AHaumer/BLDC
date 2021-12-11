@@ -15,18 +15,18 @@ model IncrementalEncoder "Incremental encoder"
   Modelica.Blocks.Math.Gain gain(k=pRev)
     annotation (Placement(transformation(extent={{20,-10},{0,10}})));
   CommonBlocks.IntervalTest intervalTest1(
-    lowerLimit=0,
-    upperLimit=2*pi/pRev/4,
+    constantLowerLimit=0,
+    constantUpperLimit=2*pi/pRev/4,
     InsideInterval=true)
     annotation (Placement(transformation(extent={{-60,-40},{-80,-20}})));
   CommonBlocks.IntervalTest intervalTest2(
-    lowerLimit=pi/2,
-    upperLimit=3*pi/2,
+    constantLowerLimit=pi/2,
+    constantUpperLimit=3*pi/2,
     InsideInterval=false)
     annotation (Placement(transformation(extent={{-60,-10},{-80,10}})));
   CommonBlocks.IntervalTest intervalTest3(
-    lowerLimit=0,
-    upperLimit=pi,
+    constantLowerLimit=0,
+    constantUpperLimit=pi,
     InsideInterval=true)
     annotation (Placement(transformation(extent={{-60,20},{-80,40}})));
   Modelica.Blocks.Math.WrapAngle wrapAngle2(positiveRange=true)

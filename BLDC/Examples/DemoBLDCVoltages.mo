@@ -16,7 +16,7 @@ model DemoBLDCVoltages "Test example: Demonstrate BLDC voltages"
         extent={{-10,-10},{10,10}},
         rotation=180,
         origin={-50,20})));
-  BLDC.Utilities.Ec3phase ec3phase
+  BLDC.Utilities.ElectronicCommutator3phase electronicCommutator
     annotation (Placement(transformation(extent={{-40,30},{-20,50}})));
   Modelica.Electrical.PowerConverters.DCAC.Polyphase2Level inverter(m=m)
     annotation (Placement(transformation(
@@ -51,17 +51,15 @@ model DemoBLDCVoltages "Test example: Demonstrate BLDC voltages"
         origin={0,-50})));
   Modelica.Electrical.Analog.Basic.Ground groundAC
     annotation (Placement(transformation(extent={{-10,-90},{10,-70}})));
-  Modelica.Blocks.Sources.BooleanConstant booleanConstant
-    annotation (Placement(transformation(extent={{-80,40},{-60,60}})));
 equation
   connect(constantVoltage.p, inverter.dc_p) annotation (Line(points={{10,80},
           {10,70},{6,70},{6,50}},color={0,0,255}));
-  connect(ec3phase.fire_p, inverter.fire_p)
+  connect(electronicCommutator.fire_p, inverter.fire_p)
     annotation (Line(points={{-19,46},{-12,46}}, color={255,0,255}));
-  connect(ec3phase.fire_n, inverter.fire_n)
+  connect(electronicCommutator.fire_n, inverter.fire_n)
     annotation (Line(points={{-19,34},{-12,34}}, color={255,0,255}));
-  connect(hallSensor.yC, ec3phase.uC) annotation (Line(points={{-39,20},{-30,
-          20},{-30,28}}, color={255,0,255}));
+  connect(hallSensor.yC, electronicCommutator.uC)
+    annotation (Line(points={{-39,20},{-30,20},{-30,28}}, color={255,0,255}));
   connect(constantSpeed.flange, hallSensor.flange)
     annotation (Line(points={{-70,20},{-60,20}}, color={0,0,0}));
   connect(inverter.ac, voltageSensor.plug_p)
@@ -86,8 +84,6 @@ equation
     annotation (Line(points={{0,-30},{0,-40}},   color={0,0,255}));
   connect(resistor.n, groundAC.p)
     annotation (Line(points={{0,-60},{0,-70}}, color={0,0,255}));
-  connect(booleanConstant.y, ec3phase.pwm) annotation (Line(points={{-59,50},
-          {-50,50},{-50,46},{-42,46}}, color={255,0,255}));
   annotation (experiment(
       Interval=1e-05,
       Tolerance=1e-06,

@@ -1,19 +1,7 @@
 within BLDC.Utilities;
-block Ec3phase "Electronic commutator for 3 phases"
-  extends Modelica.Blocks.Icons.BooleanBlock;
-  constant Integer m(min=3) = 3 "Number of stator phases";
-  Modelica.Blocks.Interfaces.BooleanInput pwm
-    annotation (Placement(transformation(extent={{-140,40},{-100,80}})));
-  Modelica.Blocks.Interfaces.BooleanInput uC[m] "Commutation signals"
-    annotation (Placement(transformation(extent={{-20,-20},{20,20}},
-        rotation=90,
-        origin={0,-120})));
-  Modelica.Blocks.Interfaces.BooleanOutput fire_p[m]
-    "Fire signals of positive potential transistors"
-    annotation (Placement(transformation(extent={{100,50},{120,70}})));
-  Modelica.Blocks.Interfaces.BooleanOutput fire_n[m]
-    "Fire signals of negative potential transistors"
-    annotation (Placement(transformation(extent={{100,-70},{120,-50}})));
+block ElectronicCommutator3phase "Electronic commutator for 3 phases"
+  extends BLDC.BaseBlocks.BaseElectronicCommutator(final m=3,
+    final orientation);
 protected
   constant Integer I1[6]={2,3,2,1,1,3} "Indices of on states in sectors";
   constant Integer I0[6]={3,1,1,2,3,2} "Indices of off states in sectors";
@@ -23,10 +11,10 @@ protected
   Integer c=sum({if uC[k] then integer(2^(k - 1)) else 0 for k in 1:m}) "Sector code";
 algorithm
   assert(c>=1 and c<=6, "Hall sensor sector error!");
-  fire_p[I1[c]]:=pwm;
-  fire_n[I1[c]]:=not pwm;
-  fire_p[I0[c]]:=not pwm;
-  fire_n[I0[c]]:=pwm;
+  fire_p[I1[c]]:=internalPWM;
+  fire_n[I1[c]]:=not internalPWM;
+  fire_p[I0[c]]:=not internalPWM;
+  fire_n[I0[c]]:=internalPWM;
   fire_p[Ix[c]]:=false;
   fire_n[Ix[c]]:=false;
   annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
@@ -52,4 +40,4 @@ setting the input <code>pwm = false</code> results in a position of the current 
 Applying a pwm signal (as for a brushed DC machine) to the input <code>pwm</code> offers the possibility to set the mean voltage applied to the phases choosen according to the Hall signals.
 </p>
 </html>"));
-end Ec3phase;
+end ElectronicCommutator3phase;

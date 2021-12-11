@@ -16,19 +16,19 @@ model DemoElectronicCommutator
         extent={{-10,-10},{10,10}},
         rotation=180,
         origin={-40,0})));
-  Utilities.Hall2Angle hall2Angle(m=m)
-    annotation (Placement(transformation(extent={{-20,-10},{0,10}})));
+  Utilities.ElectronicCommutator electronicCommutator(m=m)
+    annotation (Placement(transformation(extent={{10,-10},{30,10}})));
   Sensors.SinCosResolver sinCosResolver(p=p, phi0=0)
     annotation (Placement(transformation(extent={{-30,20},{-50,40}})));
   Utilities.SinCosEvaluation sinCosEvaluation
     annotation (Placement(transformation(extent={{-20,20},{0,40}})));
-  Modelica.Blocks.Math.WrapAngle wrapAngle
+  Modelica.Blocks.Math.WrapAngle wrapAngle(positiveRange=true)
     annotation (Placement(transformation(extent={{10,20},{30,40}})));
 equation
   connect(constantSpeed.flange, hallSensor.flange)
     annotation (Line(points={{-70,0},{-50,0}},   color={0,0,0}));
-  connect(hallSensor.yC,hall2Angle. uC)
-    annotation (Line(points={{-29,0},{-22,0}}, color={255,0,255}));
+  connect(hallSensor.yC, electronicCommutator.uC) annotation (Line(points={{-29,
+          0},{-20,0},{-20,-22},{20,-22},{20,-12}}, color={255,0,255}));
   connect(constantSpeed.flange, sinCosResolver.flange) annotation (Line(points={{
           -70,0},{-60,0},{-60,30},{-50,30}}, color={0,0,0}));
   connect(sinCosResolver.y, sinCosEvaluation.u)
@@ -41,7 +41,8 @@ equation
       __Dymola_Algorithm="Dassl"),                                      Documentation(
         info="<html>
 <p>
-Demonstrates how the rotor position is determined by the electronic commutator.
+Demonstrates how the rotor position is determined by the electronic commutator:
+Compare <code>wrapAngle.y</code> and protected variable <code>electronicCommutator.rotorPosition</code>.
 </p>
 </html>"));
 end DemoElectronicCommutator;

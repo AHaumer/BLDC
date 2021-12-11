@@ -66,7 +66,7 @@ model DemoBLDCwithPWM "Test example: Brushless DC machine drive"
   Modelica.Electrical.Analog.Sources.ConstantVoltage
                                                    constantVoltage(V=VDC)
     annotation (Placement(transformation(extent={{20,40},{0,60}})));
-  Utilities.Ec3phase ec3phase
+  Utilities.ElectronicCommutator3phase electronicCommutator(useConstantPWM=false)
     annotation (Placement(transformation(extent={{-30,10},{-10,30}})));
   Modelica.Blocks.Sources.Ramp voltageRamp(
     height=VDC,
@@ -113,13 +113,13 @@ equation
     annotation (Line(points={{0,40},{4,40},{4,30}},    color={0,0,255}));
   connect(constantVoltage.p, inverter.dc_p) annotation (Line(points={{20,50},{20,
           40},{16,40},{16,30}}, color={0,0,255}));
-  connect(ec3phase.fire_p, inverter.fire_p)
+  connect(electronicCommutator.fire_p, inverter.fire_p)
     annotation (Line(points={{-9,26},{-2,26}}, color={255,0,255}));
-  connect(hallSensor.yC, ec3phase.uC) annotation (Line(points={{30,-71},{30,
-          -90},{-20,-90},{-20,8}}, color={255,0,255}));
+  connect(hallSensor.yC, electronicCommutator.uC) annotation (Line(points={{30,
+          -71},{30,-90},{-20,-90},{-20,8}}, color={255,0,255}));
   connect(loadTorque.flange, loadInertia.flange_b)
     annotation (Line(points={{70,-40},{60,-40}}, color={0,0,0}));
-  connect(ec3phase.fire_n, inverter.fire_n)
+  connect(electronicCommutator.fire_n, inverter.fire_n)
     annotation (Line(points={{-9,14},{-2,14}}, color={255,0,255}));
   connect(inverter.ac, currentRMSSensor.plug_p)
     annotation (Line(points={{10,10},{10,0}},
@@ -127,7 +127,7 @@ equation
   connect(currentRMSSensor.plug_n, terminalBox.plugSupply)
     annotation (Line(points={{10,-20},{10,-28}},
                                                color={0,0,255}));
-  connect(ec3phase.pwm, pwm.fire)
+  connect(electronicCommutator.pwm, pwm.fire)
     annotation (Line(points={{-32,26},{-39,26}}, color={255,0,255}));
   connect(adaptor.dutyCycle, pwm.dutyCycle)
     annotation (Line(points={{-59,40},{-50,40},{-50,32}}, color={0,0,127}));

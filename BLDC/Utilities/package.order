@@ -2,5 +2,5 @@ SinCosEvaluation
 EncoderTimeSpan
 EncoderPulseCount
 HallTimeSpan
-Hall2Angle
-Ec3phase
+ElectronicCommutator3phase
+ElectronicCommutator

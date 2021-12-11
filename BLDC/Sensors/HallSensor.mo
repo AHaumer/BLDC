@@ -29,8 +29,8 @@ model HallSensor "Hall sensor"
   Modelica.Blocks.Routing.Replicator replicator(nout=m)
     annotation (Placement(transformation(extent={{-20,-10},{-40,10}})));
   CommonBlocks.IntervalTest intervalTest[m](
-    lowerLimit=lowerLimit,
-    upperLimit=upperLimit,
+    constantLowerLimit=lowerLimit,
+    constantUpperLimit=upperLimit,
     InsideInterval=InsideInterval)
     annotation (Placement(transformation(extent={{-50,-10},{-70,10}})));
 protected

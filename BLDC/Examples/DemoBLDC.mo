@@ -65,7 +65,7 @@ model DemoBLDC "Test example: Brushless DC machine drive"
         origin={10,20})));
   Modelica.Electrical.Analog.Sources.SignalVoltage signalVoltage
     annotation (Placement(transformation(extent={{20,40},{0,60}})));
-  Utilities.Ec3phase ec3phase
+  Utilities.ElectronicCommutator3phase electronicCommutator
     annotation (Placement(transformation(extent={{-30,10},{-10,30}})));
   Modelica.Blocks.Sources.Ramp voltageRamp(
     height=VDC,
@@ -83,8 +83,6 @@ model DemoBLDC "Test example: Brushless DC machine drive"
         extent={{10,-10},{-10,10}},
         rotation=90,
         origin={10,-10})));
-  Modelica.Blocks.Sources.BooleanConstant booleanConstant
-    annotation (Placement(transformation(extent={{-70,20},{-50,40}})));
 initial equation
   smpm.is[1:2] = zeros(2);
 equation
@@ -105,15 +103,15 @@ equation
   connect(signalVoltage.p, inverter.dc_p)
     annotation (Line(points={{20,50},{20,40},{16,40},{16,30}},
                                                              color={0,0,255}));
-  connect(ec3phase.fire_p, inverter.fire_p)
+  connect(electronicCommutator.fire_p, inverter.fire_p)
     annotation (Line(points={{-9,26},{-2,26}}, color={255,0,255}));
-  connect(hallSensor.yC, ec3phase.uC) annotation (Line(points={{30,-71},{30,
-          -90},{-20,-90},{-20,8}}, color={255,0,255}));
+  connect(hallSensor.yC, electronicCommutator.uC) annotation (Line(points={{30,
+          -71},{30,-90},{-20,-90},{-20,8}}, color={255,0,255}));
   connect(voltageRamp.y, signalVoltage.v)
     annotation (Line(points={{-9,80},{10,80},{10,62}},color={0,0,127}));
   connect(loadTorque.flange, loadInertia.flange_b)
     annotation (Line(points={{70,-40},{60,-40}}, color={0,0,0}));
-  connect(ec3phase.fire_n, inverter.fire_n)
+  connect(electronicCommutator.fire_n, inverter.fire_n)
     annotation (Line(points={{-9,14},{-2,14}}, color={255,0,255}));
   connect(inverter.ac, currentRMSSensor.plug_p)
     annotation (Line(points={{10,10},{10,0}},
@@ -121,8 +119,6 @@ equation
   connect(currentRMSSensor.plug_n, terminalBox.plugSupply)
     annotation (Line(points={{10,-20},{10,-28}},
                                                color={0,0,255}));
-  connect(booleanConstant.y, ec3phase.pwm) annotation (Line(points={{-49,30},
-          {-40,30},{-40,26},{-32,26}}, color={255,0,255}));
   annotation (experiment(
       StopTime=1.5,
       Interval=1e-05,
