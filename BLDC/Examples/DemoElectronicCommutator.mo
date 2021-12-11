@@ -4,7 +4,7 @@ model DemoElectronicCommutator
   extends Modelica.Icons.Example;
   import Modelica.Units.SI;
   import Modelica.Constants.pi;
-  constant Integer m=6 "Number of phases";
+  constant Integer m=3 "Number of phases";
   parameter Integer p(final min=1)=2 "Number of pole pairs";
   parameter SI.Frequency fNominal=50 "Nominal frequqncy";
   parameter SI.AngularVelocity wNominal(displayUnit="rpm")=2*pi*fNominal/p "Nominal speed";
@@ -16,7 +16,7 @@ model DemoElectronicCommutator
         extent={{-10,-10},{10,10}},
         rotation=180,
         origin={-40,0})));
-  Utilities.RotorAngle rotorAngle(m=m)
+  Utilities.Hall2Angle hall2Angle(m=m)
     annotation (Placement(transformation(extent={{-20,-10},{0,10}})));
   Sensors.SinCosResolver sinCosResolver(p=p, phi0=0)
     annotation (Placement(transformation(extent={{-30,20},{-50,40}})));
@@ -27,7 +27,7 @@ model DemoElectronicCommutator
 equation
   connect(constantSpeed.flange, hallSensor.flange)
     annotation (Line(points={{-70,0},{-50,0}},   color={0,0,0}));
-  connect(hallSensor.yC, rotorAngle.uC)
+  connect(hallSensor.yC,hall2Angle. uC)
     annotation (Line(points={{-29,0},{-22,0}}, color={255,0,255}));
   connect(constantSpeed.flange, sinCosResolver.flange) annotation (Line(points={{
           -70,0},{-60,0},{-60,30},{-50,30}}, color={0,0,0}));
