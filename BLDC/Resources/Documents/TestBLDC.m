@@ -1,29 +1,37 @@
-function I=TestBLDC(m)
-    orientation=symmetricOrientation(m);
-    for k=1:2*m
-        rotorPosition(k)=(k-1)*2*pi/(2*m);
+eps=1e-3;
+orientation=symmetricOrientation(m);
+for ko=1:m
+    if orientation(ko)<0
+        orientation(ko)=orientation(ko)+2*pi;
     end;
+end;
+for kr=1:2*m
+    rotorPosition(kr)=(kr-1)*2*pi/(2*m);
+end;
+for ko=1:m
+	for kr=1:2*m
+    	diff(ko,kr)=mod(orientation(ko)-rotorPosition(kr), 2*pi);
+        if diff(ko,kr)>pi
+        	diff(ko,kr)=diff(ko,kr)-2*pi;
+        end;
+        if abs(abs(diff(ko,kr))-pi)<eps
+        	diff(ko,kr)=0;
+        end;
+    end;
+end;
+for kr=1:2*m
+	I(kr)=0;
     for ko=1:m
-        for kr=1:2*m
-            diff(ko,kr)=mod(orientation(ko)-rotorPosition(kr), 2*pi);
-            if diff(ko,kr)>pi
-                diff(ko,kr)=diff(ko,kr)-2*pi;
-            end;
-            if abs(diff(ko,kr)-pi)<1e-6
-                diff(ko,kr)=0;
-            end;
+        active(ko,kr)=0;
+        if abs(diff(ko,kr)-pi/2)<=2*pi/(2*m)+eps
+        	I(kr)=I(kr)+exp(j*diff(ko,kr));
+            active(ko,kr)=+1;
+        elseif abs(diff(ko,kr)+pi/2)<=2*pi/(2*m)+eps
+        	I(kr)=I(kr)-exp(j*diff(ko,kr));
+            active(ko,kr)=-1;
         end;
     end;
-    for kr=1:2*m
-        I(kr)=0;
-        for ko=1:m
-            if diff(ko,k)>1e-6
-                I(kr)=I(kr)+exp(j*diff(ko,k));
-            elseif diff(ko,k)<-1e-6
-                I(kr)=I(kr)-exp(j*diff(ko,k));
-            end;
-        end;
-    end;
+end;
     
     function y=symmetricOrientation(m)
         if mod(m,2)==0
@@ -40,4 +48,3 @@ function I=TestBLDC(m)
             end;
         end;
     end
-end

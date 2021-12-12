@@ -3,6 +3,9 @@ class ReleaseNotes "Release Notes"
   extends Modelica.Icons.ReleaseNotes;
   annotation (Documentation(info="<html>
 
+<h4>v1.3.1 2021-12-12</h4>
+<p>Improved electronic commutator working properly for odd number of phases, even number of phases needs further investigation.</p>
+
 <h4>v1.3.0 2021-12-12</h4>
 <ul>
 <li>implemented direction of rotation from hall signals</code></li>

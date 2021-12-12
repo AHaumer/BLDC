@@ -48,7 +48,8 @@ model DemoBLDC "Test example: Brushless DC machine drive"
   Modelica.Electrical.Machines.Utilities.MultiTerminalBox terminalBox(m=smpmData.ms,
       terminalConnection="Y")
     annotation (Placement(transformation(extent={{10,-34},{30,-14}})));
-  parameter Utilities.SM_PermanentMagnetData smpmData "Synchronous machine data"
+  parameter Utilities.SM_PermanentMagnetData smpmData(ms=5)
+                                                      "Synchronous machine data"
     annotation (Placement(transformation(extent={{10,-80},{30,-60}})));
   BLDC.Sensors.HallSensor hallSensor(p=smpmData.p, m=smpmData.ms)
                                                         annotation (Placement(
@@ -82,6 +83,11 @@ model DemoBLDC "Test example: Brushless DC machine drive"
         extent={{10,-10},{-10,10}},
         rotation=90,
         origin={20,-10})));
+  Modelica.Electrical.Polyphase.Basic.Star star(m=smpmData.mSystems) annotation (
+     Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=270,
+        origin={0,-40})));
 initial equation
   smpm.is[1:2] = zeros(2);
 equation
@@ -119,6 +125,8 @@ equation
   connect(currentRMSSensor.plug_n, terminalBox.plugSupply)
     annotation (Line(points={{20,-20},{20,-28}},
                                                color={0,0,255}));
+  connect(star.plug_p, terminalBox.starpoint) annotation (Line(points={{
+          1.77636e-15,-30},{0,-30},{0,-28},{10,-28}}, color={0,0,255}));
   annotation (experiment(
       StopTime=2,
       Interval=1e-05,
