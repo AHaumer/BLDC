@@ -5,6 +5,7 @@ model DemoBLDCwithPWM "Test example: Brushless DC machine drive"
   import Modelica.Constants.pi;
   parameter SI.Voltage VDC=smpmData.VsOpenCircuit*Modelica.Electrical.Polyphase.Functions.factorY2DC(smpmData.ms) "Nominal DC voltage";
   parameter SI.Voltage VDCmax=1.1*VDC "Max. DC voltage";
+  parameter SI.Frequency fS=1000 "Switching frequency";
   parameter SI.AngularVelocity wNominal(displayUnit="rpm")=2*pi*smpmData.fsNominal/smpmData.p "Nominal speed";
   parameter SI.Torque tauNominal=181.4 "Nominal torque";
   parameter SI.Inertia JLoad=smpmData.Jr "Load inertia";
@@ -87,8 +88,10 @@ model DemoBLDCwithPWM "Test example: Brushless DC machine drive"
         extent={{10,-10},{-10,10}},
         rotation=90,
         origin={20,-10})));
-  Modelica.Electrical.PowerConverters.DCDC.Control.SignalPWM pwm(
-      useConstantDutyCycle=false) annotation (Placement(transformation(
+  FromMSL.SignalPWM                                          pwm(
+      useConstantDutyCycle=false,
+    f=fS,                         refType=BLDC.FromMSL.SingleReferenceType.Triangle)
+                                  annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
         origin={-40,20})));
