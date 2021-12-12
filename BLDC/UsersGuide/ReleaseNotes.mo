@@ -4,7 +4,8 @@ class ReleaseNotes "Release Notes"
   annotation (Documentation(info="<html>
 
 <h4>v1.3.1 2021-12-12</h4>
-<p>Improved electronic commutator working properly for odd number of phases, even number of phases needs further investigation.</p>
+<p>Improved electronic commutator working properly for odd number of phases, even number of phases needs further investigation.<br>
+   Note that number of phases = power of 2 is not handled by the FundamentalWave machine models.</p>
 
 <h4>v1.3.0 2021-12-12</h4>
 <ul>

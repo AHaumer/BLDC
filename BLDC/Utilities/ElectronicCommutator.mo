@@ -17,10 +17,10 @@ algorithm
   diff:={if abs(abs(diff[k]) - pi) < eps then 0 else diff[k] for k in 1:m};
 equation
   assert(mod(m,2)<>0, "Electronic commutator not working properly for even number of phases!");
-  fire_p={if abs(diff[k] - pi/2)<=2*pi/(2*m)+eps then internalPWM
-      elseif abs(diff[k] + pi/2)<=2*pi/(2*m)+eps then not internalPWM else false for k in 1:m};
-  fire_n={if abs(diff[k] + pi/2)<=2*pi/(2*m)+eps then internalPWM
-      elseif abs(diff[k] - pi/2)<=2*pi/(2*m)+eps then not internalPWM else false for k in 1:m};
+  fire_p={if abs(diff[k] - pi/2)<=pi/(2*m)+eps then internalPWM
+      elseif abs(diff[k] + pi/2)<=pi/(2*m)+eps then not internalPWM else false for k in 1:m};
+  fire_n={if abs(diff[k] + pi/2)<=pi/(2*m)+eps then internalPWM
+      elseif abs(diff[k] - pi/2)<=pi/(2*m)+eps then not internalPWM else false for k in 1:m};
   annotation (Documentation(info="<html>
 <p>
 For every Hall signal <code>uC[k]=true</code>, the phasor <code>exp(-j*orientation[k])</code> is added, else zero. 

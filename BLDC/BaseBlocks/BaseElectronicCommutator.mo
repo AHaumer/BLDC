@@ -5,7 +5,7 @@ partial block BaseElectronicCommutator "partial electronic commutator"
   parameter Modelica.Units.SI.Angle orientation[m]=
     Modelica.Electrical.Polyphase.Functions.symmetricOrientation(m) "Orientation of phases";
   parameter Boolean useConstantPWM=true "Otherwise input" annotation(Evaluate=true);
-  parameter Boolean ConstantPWM=true "PWM resp. direction" annotation(Dialog(enable=useCOnstantPWM));
+  parameter Boolean ConstantPWM=true "PWM resp. direction" annotation(Dialog(enable=useConstantPWM));
   Modelica.Blocks.Interfaces.BooleanInput pwm if not useConstantPWM
     annotation (Placement(transformation(extent={{-140,40},{-100,80}})));
   Modelica.Blocks.Interfaces.BooleanInput uC[m] "Commutation signals"

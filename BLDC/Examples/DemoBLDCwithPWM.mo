@@ -4,6 +4,7 @@ model DemoBLDCwithPWM "Test example: Brushless DC machine drive"
   import Modelica.Units.SI;
   import Modelica.Constants.pi;
   parameter SI.Voltage VDC=smpmData.VsOpenCircuit*Modelica.Electrical.Polyphase.Functions.factorY2DC(smpmData.ms) "Nominal DC voltage";
+  parameter SI.Voltage VDCmax=1.1*VDC "Max. DC voltage";
   parameter SI.AngularVelocity wNominal(displayUnit="rpm")=2*pi*smpmData.fsNominal/smpmData.p "Nominal speed";
   parameter SI.Torque tauNominal=181.4 "Nominal torque";
   parameter SI.Inertia JLoad=smpmData.Jr "Load inertia";
@@ -62,7 +63,7 @@ model DemoBLDCwithPWM "Test example: Brushless DC machine drive"
         extent={{-10,-10},{10,10}},
         rotation=270,
         origin={20,20})));
-  Modelica.Electrical.Analog.Sources.ConstantVoltage constantVoltage(V=VDC)
+  Modelica.Electrical.Analog.Sources.ConstantVoltage constantVoltage(V=VDCmax)
     annotation (Placement(transformation(extent={{30,40},{10,60}})));
   Utilities.ElectronicCommutator electronicCommutator(m=smpmData.ms,
     useConstantPWM=false)
@@ -91,8 +92,8 @@ model DemoBLDCwithPWM "Test example: Brushless DC machine drive"
         extent={{-10,-10},{10,10}},
         rotation=270,
         origin={-40,20})));
-  Modelica.Electrical.PowerConverters.DCDC.Control.Voltage2DutyCycle adaptor(
-      VLim=VDC)
+  Modelica.Electrical.PowerConverters.DCDC.Control.Voltage2DutyCycle adaptor(VLim=
+        VDCmax)
     annotation (Placement(transformation(extent={{-70,30},{-50,50}})));
   Modelica.Electrical.Polyphase.Basic.Star star(m=smpmData.mSystems) annotation (
      Placement(transformation(
@@ -157,7 +158,7 @@ Plot the machine's speed <code>smpm.wMechanical</code>, the electrical torque <c
 </p>
 <h4>Note:</h4>
 <p>
-Normally, the DC voltage is higher than in this example, and the duty cacle is limited slightly below 1 
+The maximum DC voltage is set 10% higher than the theoretical DC volatge, thus the duty cacle is limited slightly below 1 
 to avoid constant switching state of the transistors but to keep pulse voltage.
 </p>
 <h4>Note:</h4>

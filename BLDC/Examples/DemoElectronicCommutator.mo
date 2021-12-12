@@ -4,7 +4,7 @@ model DemoElectronicCommutator
   extends Modelica.Icons.Example;
   import Modelica.Units.SI;
   import Modelica.Constants.pi;
-  constant Integer m=3 "Number of phases";
+  constant Integer m=5 "Number of phases";
   parameter Integer p(final min=1)=2 "Number of pole pairs";
   parameter SI.Frequency fNominal=50 "Nominal frequqncy";
   parameter SI.AngularVelocity wNominal(displayUnit="rpm")=2*pi*fNominal/p "Nominal speed";
@@ -22,9 +22,11 @@ model DemoElectronicCommutator
     annotation (Placement(transformation(extent={{-20,20},{0,40}})));
   Modelica.Blocks.Math.WrapAngle wrapAngle(positiveRange=true)
     annotation (Placement(transformation(extent={{10,20},{30,40}})));
-  Utilities.ElectronicCommutator            electronicCommutator3phase(m=m)
-                                                                       annotation (
-    Placement(visible = true, transformation(origin = {20, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+  Utilities.ElectronicCommutator electronicCommutator(m=m) annotation (Placement(
+        visible=true, transformation(
+        origin={20,0},
+        extent={{-10,-10},{10,10}},
+        rotation=0)));
 equation
   connect(constantSpeed.flange, hallSensor.flange) annotation (
     Line(points = {{-70, 0}, {-50, 0}}, color = {0, 0, 0}));
@@ -34,9 +36,8 @@ equation
     Line(points = {{-29, 30}, {-22, 30}}, color = {0, 0, 127}));
   connect(sinCosEvaluation.phi, wrapAngle.u) annotation (
     Line(points = {{1, 30}, {8, 30}}, color = {0, 0, 127}));
-  connect(hallSensor.yC, electronicCommutator3phase.uC) annotation (Line(points=
-          {{-29,-1.9984e-15},{-20,-1.9984e-15},{-20,-20},{20,-20},{20,-12}},
-        color={255,0,255}));
+  connect(hallSensor.yC, electronicCommutator.uC) annotation (Line(points={{-29,-1.9984e-15},
+          {-20,-1.9984e-15},{-20,-20},{20,-20},{20,-12}}, color={255,0,255}));
   annotation (experiment(
       StopTime=1,
       Interval=1e-05,

@@ -130,7 +130,6 @@ equation
   annotation (experiment(
       StopTime=2,
       Interval=1e-05,
-      Interval=1e-05,
       Tolerance=1e-06), Documentation(info="<html>
 <p>
 A permanent magnet synchronous machine is fed from a variable DC voltage source. 
