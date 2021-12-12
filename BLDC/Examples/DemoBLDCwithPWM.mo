@@ -94,11 +94,11 @@ model DemoBLDCwithPWM "Test example: Brushless DC machine drive"
   Modelica.Electrical.PowerConverters.DCDC.Control.Voltage2DutyCycle adaptor(
       VLim=VDC)
     annotation (Placement(transformation(extent={{-70,30},{-50,50}})));
-  Modelica.Electrical.Polyphase.Basic.Star star(m=smpmData.mSystems) annotation
-    (Placement(transformation(
+  Modelica.Electrical.Polyphase.Basic.Star star(m=smpmData.mSystems) annotation (
+     Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
-        origin={0,-42})));
+        origin={0,-40})));
 initial equation
   smpm.is[1:2] = zeros(2);
 equation
@@ -140,7 +140,7 @@ equation
   connect(voltageRamp.y, adaptor.v)
     annotation (Line(points={{-79,40},{-72,40}}, color={0,0,127}));
   connect(star.plug_p, terminalBox.starpoint)
-    annotation (Line(points={{0,-32},{0,-28},{10,-28}}, color={0,0,255}));
+    annotation (Line(points={{0,-30},{0,-28},{10,-28}}, color={0,0,255}));
   annotation (experiment(
       StopTime=2,
       Interval=1e-05,

@@ -22,7 +22,8 @@ model DemoElectronicCommutator
     annotation (Placement(transformation(extent={{-20,20},{0,40}})));
   Modelica.Blocks.Math.WrapAngle wrapAngle(positiveRange=true)
     annotation (Placement(transformation(extent={{10,20},{30,40}})));
-  BLDC.Utilities.ElectronicCommutator3phase electronicCommutator3phase annotation (
+  Utilities.ElectronicCommutator            electronicCommutator3phase(m=m)
+                                                                       annotation (
     Placement(visible = true, transformation(origin = {20, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
 equation
   connect(constantSpeed.flange, hallSensor.flange) annotation (
@@ -33,8 +34,9 @@ equation
     Line(points = {{-29, 30}, {-22, 30}}, color = {0, 0, 127}));
   connect(sinCosEvaluation.phi, wrapAngle.u) annotation (
     Line(points = {{1, 30}, {8, 30}}, color = {0, 0, 127}));
-  connect(hallSensor.yC, electronicCommutator3phase.uC) annotation (
-    Line(points = {{-28, 0}, {-20, 0}, {-20, -20}, {20, -20}, {20, -12}}, color = {255, 0, 255}, thickness = 0.5));
+  connect(hallSensor.yC, electronicCommutator3phase.uC) annotation (Line(points=
+          {{-29,-1.9984e-15},{-20,-1.9984e-15},{-20,-20},{20,-20},{20,-12}},
+        color={255,0,255}));
   annotation (experiment(
       StopTime=1,
       Interval=1e-05,
