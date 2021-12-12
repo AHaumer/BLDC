@@ -18,8 +18,8 @@ protected
   Boolean B=u[3];
   Boolean notA=not A;
   Boolean notB=not B;
-  Boolean firstEdge;
-  Modelica.Units.SI.Time t0;
+  Boolean firstEdge "true at first edge";
+  Modelica.Units.SI.Time t0 "time instant of last edge";
 initial equation
   pre(A)=true;
   pre(B)=false;

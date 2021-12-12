@@ -17,7 +17,7 @@ protected
   Boolean B=u[3];
   Boolean notA=not A;
   Boolean notB=not B;
-  Integer count;
+  Integer count "count of edges";
 initial equation
   pre(A)=true;
   pre(B)=false;

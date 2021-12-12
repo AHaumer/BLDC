@@ -36,10 +36,9 @@ equation
   connect(sinCosEvaluation.phi, wrapAngle.u)
     annotation (Line(points={{1,30},{8,30}}, color={0,0,127}));
   annotation (experiment(
+      StopTime=1,
       Interval=1e-05,
-      Tolerance=1e-06,
-      __Dymola_Algorithm="Dassl"),                                      Documentation(
-        info="<html>
+      Tolerance=1e-06), Documentation(info="<html>
 <p>
 Demonstrates how the rotor position is determined by the electronic commutator:
 Compare <code>wrapAngle.y</code> and protected variable <code>electronicCommutator.rotorPosition</code>.

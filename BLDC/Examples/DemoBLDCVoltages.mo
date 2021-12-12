@@ -85,10 +85,9 @@ equation
   connect(resistor.n, groundAC.p)
     annotation (Line(points={{0,-60},{0,-70}}, color={0,0,255}));
   annotation (experiment(
+      StopTime=1,
       Interval=1e-05,
-      Tolerance=1e-06,
-      __Dymola_Algorithm="Dassl"),                                      Documentation(
-        info="<html>
+      Tolerance=1e-06), Documentation(info="<html>
 <p>
 Demonstrates how phase voltages are built from a constant DC voltage and Hall sensor signals, spinning at constant speed. 
 Plot the resulting voltage space vector <code>rotator.y[1] + j*rotator.y[2]</code>.

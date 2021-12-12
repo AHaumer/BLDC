@@ -4,6 +4,8 @@ block HallTimeSpan "Time span between edges of Hall signals"
   import Modelica.Units.SI;
   import Modelica.Constants.pi;
   import Modelica.Constants.eps;
+  import BLDC.Functions.getEventIndex;
+  import BLDC.Functions.nextIndex;
   parameter Integer p(final min=1, start=2) "Number of pole pairs";
   parameter Integer m(min=3) = 3 "Number of stator phases";
   parameter SI.Angle orientation[m]=
@@ -19,22 +21,26 @@ block HallTimeSpan "Time span between edges of Hall signals"
     annotation (Placement(transformation(extent={{100,50},{120,70}})));
 protected
   Boolean notC[m]=not uC;
-  Boolean firstEdge;
-  Modelica.Units.SI.Time t0;
+  Boolean firstEdge "true at first edge";
+  Modelica.Units.SI.Time t0 "time instant of last edge";
 initial equation
+  pre(uC)=fill(false,m);
+  pre(notC)=fill(true,m);
   firstEdge=true;
   t0=time;
   phi=phi0;
 equation
   der(phi)= w;
   when edge(uC) then
-      w=(if noEvent(time - pre(t0) < eps) or pre(firstEdge) then 0 else 2*pi/(2*m)/(time - pre(t0)));
-      firstEdge=false;
-      t0=time;
+    w= (if not uC[nextIndex(m, getEventIndex(m,uC,pre(uC)))] then +1 else -1)*
+       (if noEvent(time - pre(t0) < eps) or pre(firstEdge) then 0 else 2*pi/(2*m)/(time - pre(t0)));
+    firstEdge= false;
+    t0= time;
   elsewhen edge(notC) then
-      w=(if noEvent(time - pre(t0) < eps) or pre(firstEdge) then 0 else 2*pi/(2*m)/(time - pre(t0)));
-      firstEdge=false;
-      t0= time;
+    w= (if not uC[nextIndex(m, getEventIndex(m,notC,pre(notC)))] then -1 else +1)*
+       (if noEvent(time - pre(t0) < eps) or pre(firstEdge) then 0 else 2*pi/(2*m)/(time - pre(t0)));
+    firstEdge= false;
+    t0= time;
   end when;
   annotation (Documentation(info="<html>
 <p>

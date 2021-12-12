@@ -2,6 +2,7 @@ within BLDC.Examples;
 model DemoEncoder "Demonstrate various encoder / resolver models"
   extends Modelica.Icons.Example;
   import Modelica.Constants.pi;
+  constant Integer m=5 "Number of phases";
   parameter Integer p(final min=1)=2 "Number of pole pairs";
   parameter Integer pRev(final min=1)=128 "Pulses per revolution";
   parameter Modelica.Units.SI.Angle phi0=0 "Initial mechanical angle (zero position)";
@@ -33,14 +34,15 @@ model DemoEncoder "Demonstrate various encoder / resolver models"
     annotation (Placement(transformation(extent={{50,-10},{70,10}})));
   Utilities.EncoderPulseCount encoderPulseCount(pRev=pRev, phi0=phi0)
     annotation (Placement(transformation(extent={{50,-40},{70,-20}})));
-  Sensors.HallSensor hallSensor(p=p, phi0=phi0)
+  Sensors.HallSensor hallSensor(p=p,
+    m=m,                             phi0=phi0)
     annotation (Placement(transformation(
         extent={{-10,10},{10,-10}},
         rotation=180,
         origin={20,-80})));
   CommonBlocks.UnwrapAngle unwrapAngle(phi0=phi0)
     annotation (Placement(transformation(extent={{50,-68},{70,-48}})));
-  Utilities.HallTimeSpan hallTimeSpan(p=p)
+  Utilities.HallTimeSpan hallTimeSpan(p=p, m=m)
     annotation (Placement(transformation(extent={{50,-100},{70,-80}})));
 equation
   connect(position.flange, sinCosResolver.flange)
@@ -58,8 +60,6 @@ equation
                                                            color={0,0,0}));
   connect(incrementalEncoder.y, encoderPulseCount.u) annotation (Line(points={{31,0},{
           40,0},{40,-30},{48,-30}},         color={255,0,255}));
-  connect(refFrequency.y, f2pos.u)
-    annotation (Line(points={{-69,0},{-62,0}}, color={0,0,127}));
   connect(hallSensor.y, unwrapAngle.u)
     annotation (Line(points={{31,-74},{40,-74},{40,-58},{48,-58}},
                                                color={0,0,127}));
@@ -69,11 +69,12 @@ equation
     annotation (Line(points={{-10,0},{0,0},{0,60},{10,60}}, color={0,0,0}));
   connect(hallSensor.yC, hallTimeSpan.uC) annotation (Line(points={{31,-80},{40,-80},
           {40,-90},{48,-90}}, color={255,0,255}));
+  connect(refFrequency.y, f2pos.u)
+    annotation (Line(points={{-69,0},{-62,0}}, color={0,0,127}));
   annotation (experiment(
       StopTime=3,
-      Interval=0.0001,
-      Tolerance=1e-06,
-      __Dymola_Algorithm="Dassl"), Documentation(info="<html>
+      Interval=1e-05,
+      Tolerance=1e-06), Documentation(info="<html>
 <p>
 The reference frequency signal is integrated to obtain the angle, which is measured by:
 </p>
