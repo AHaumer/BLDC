@@ -1,4 +1,4 @@
-within BLDC.CommonBlocks;
+within BLDC.ToMSL;
 block IntervalTest
   "Output y is true, if input u is within the specified interval"
    extends Modelica.Blocks.Interfaces.partialBooleanSO;
@@ -15,7 +15,6 @@ block IntervalTest
     annotation (Placement(transformation(extent={{-140,-100},{-100,-60}})));
   Modelica.Blocks.Interfaces.RealInput upperLimit if not useConstantLimits
     annotation (Placement(transformation(extent={{-140,60},{-100,100}})));
-
 protected
   Modelica.Blocks.Interfaces.RealInput lowerLimitInternal annotation (Placement(
         transformation(extent={{-94,-84},{-86,-76}}), iconTransformation(extent={

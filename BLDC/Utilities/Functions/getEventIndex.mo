@@ -1,4 +1,4 @@
-within BLDC.Functions;
+within BLDC.Utilities.Functions;
 function getEventIndex "get first index that triggered event"
   extends Modelica.Icons.Function;
   input Integer m "Max. index";

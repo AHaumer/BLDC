@@ -1,4 +1,4 @@
-within BLDC.CommonBlocks;
+within BLDC.ToMSL;
 block TriggeredRootMeanSquare
   "Calculate root mean square over period determined by trigger"
   extends Modelica.Blocks.Interfaces.SISO;
@@ -19,7 +19,6 @@ block TriggeredRootMeanSquare
   Modelica.Blocks.Math.Sqrt sqrt1
     annotation (Placement(transformation(extent={{40,-10},{60,10}})));
 equation
-
   connect(product.y, triggeredMean.u)
     annotation (Line(points={{-38.3,0},{-12,0}}, color={0,0,127}));
   connect(triggeredMean.y, sqrt1.u)

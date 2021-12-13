@@ -14,17 +14,17 @@ model IncrementalEncoder "Incremental encoder"
     annotation (Placement(transformation(extent={{60,-10},{40,10}})));
   Modelica.Blocks.Math.Gain gain(k=pRev)
     annotation (Placement(transformation(extent={{20,-10},{0,10}})));
-  CommonBlocks.IntervalTest intervalTest1(
+  ToMSL.IntervalTest intervalTest1(
     constantLowerLimit=0,
     constantUpperLimit=2*pi/pRev/4,
     InsideInterval=true)
     annotation (Placement(transformation(extent={{-60,-40},{-80,-20}})));
-  CommonBlocks.IntervalTest intervalTest2(
+  ToMSL.IntervalTest intervalTest2(
     constantLowerLimit=pi/2,
     constantUpperLimit=3*pi/2,
     InsideInterval=false)
     annotation (Placement(transformation(extent={{-60,-10},{-80,10}})));
-  CommonBlocks.IntervalTest intervalTest3(
+  ToMSL.IntervalTest intervalTest3(
     constantLowerLimit=0,
     constantUpperLimit=pi,
     InsideInterval=true)

@@ -8,7 +8,7 @@ block MeasurementTrigger "Detect measurement trigger from rising and falling edg
     annotation (Placement(transformation(extent={{-40,10},{-20,30}})));
   Modelica.Blocks.Logical.FallingEdge fallingEdge[m]
     annotation (Placement(transformation(extent={{-40,-30},{-20,-10}})));
-  CommonBlocks.MultiOr multiOr(nin=2*m)
+  ToMSL.MultiOr multiOr(nin=2*m)
     annotation (Placement(transformation(extent={{20,-10},{40,10}})));
 equation
   connect(u, risingEdge.u) annotation (Line(points={{-120,0},{-60,0},{-60,20},{

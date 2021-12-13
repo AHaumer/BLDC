@@ -4,8 +4,8 @@ block HallTimeSpan "Time span between edges of Hall signals"
   import Modelica.Units.SI;
   import Modelica.Constants.pi;
   import Modelica.Constants.eps;
-  import BLDC.Functions.getEventIndex;
-  import BLDC.Functions.nextIndex;
+  import BLDC.Utilities.Functions.getEventIndex;
+  import BLDC.Utilities.Functions.nextIndex;
   parameter Integer p(final min=1, start=2) "Number of pole pairs";
   parameter Integer m(min=3) = 3 "Number of stator phases";
   parameter SI.Angle orientation[m]=

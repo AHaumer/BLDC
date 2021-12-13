@@ -1,4 +1,4 @@
-within BLDC.CommonBlocks;
+within BLDC.ToMSL;
 block TriggeredMean "Calculate mean over period determined by trigger"
   extends Modelica.Blocks.Interfaces.SISO;
   import Modelica.Constants.eps;

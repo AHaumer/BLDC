@@ -1,14 +1,39 @@
 within BLDC.Utilities;
 block ElectronicCommutator3phase "Electronic commutator for 3 phases"
-  extends BLDC.BaseBlocks.BaseElectronicCommutator(final m=3,
-    final orientation);
+  extends Modelica.Blocks.Icons.BooleanBlock;
+  constant Integer m=3 "Number of phases";
+  parameter Boolean useConstantPWM=true "Otherwise input" annotation(Evaluate=true);
+  parameter Boolean ConstantPWM=true "PWM resp. direction" annotation(Dialog(enable=useConstantPWM));
+  Modelica.Blocks.Interfaces.BooleanInput pwm if not useConstantPWM
+    annotation (Placement(transformation(extent={{-140,40},{-100,80}})));
+  Modelica.Blocks.Interfaces.BooleanInput uC[m] "Commutation signals"
+    annotation (Placement(transformation(extent={{-20,-20},{20,20}},
+        rotation=90,
+        origin={0,-120})));
+  Modelica.Blocks.Interfaces.BooleanOutput fire_p[m]
+    "Fire signals of positive potential transistors"
+    annotation (Placement(transformation(extent={{100,50},{120,70}})));
+  Modelica.Blocks.Interfaces.BooleanOutput fire_n[m]
+    "Fire signals of negative potential transistors"
+    annotation (Placement(transformation(extent={{100,-70},{120,-50}})));
 protected
   constant Integer I1[6]={2,3,2,1,1,3} "Indices of on states in sectors";
   constant Integer I0[6]={3,1,1,2,3,2} "Indices of off states in sectors";
   constant Integer Ix[6]={1,2,3,3,2,1} "Indices of open states in sectors";
-  //Hall 100 110 010 011 001 101
-  //Fire x10 01x 0x1 x01 10x 1x0
+  //Angle    0  60 120 180 240 300
+  //Sector   1   2   3   4   5   6
+  //Hall   100 110 010 011 001 101
+  //Fire   x10 01x 0x1 x01 10x 1x0
   Integer c=sum({if uC[k] then integer(2^(k - 1)) else 0 for k in 1:m}) "Sector code";
+  Modelica.Blocks.Interfaces.BooleanInput internalPWM annotation (Placement(
+        transformation(extent={{-94,56},{-86,64}}), iconTransformation(extent={{-94,
+            56},{-86,64}})));
+equation
+  if useConstantPWM then
+    internalPWM=ConstantPWM;
+  else
+    connect(internalPWM, pwm);
+  end if;
 algorithm
   assert(c>=1 and c<=6, "Hall sensor sector error!");
   fire_p[I1[c]]:=internalPWM;

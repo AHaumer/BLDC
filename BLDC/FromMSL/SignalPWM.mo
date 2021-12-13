@@ -23,8 +23,7 @@ model SignalPWM "Generates a pulse width modulated (PWM) boolean fire signal"
         extent={{-10,-10},{10,10}},
         rotation=90,
         origin={60,110})));
-  Modelica.Blocks.Sources.Constant const(final k=constantDutyCycle) if
-    useConstantDutyCycle
+  Modelica.Blocks.Sources.Constant const(final k=constantDutyCycle) if useConstantDutyCycle
     annotation (Placement(transformation(extent={{-100,-60},{-80,-40}})));
   Modelica.Blocks.Nonlinear.Limiter limiter(uMax=1, uMin=0)
     annotation (Placement(transformation(extent={{-60,-10},{-40,10}})));
@@ -32,8 +31,8 @@ model SignalPWM "Generates a pulse width modulated (PWM) boolean fire signal"
         transformation(
         extent={{-10,10},{10,-10}},
         origin={22,-8})));
-  Modelica.Blocks.Discrete.ZeroOrderHold zeroOrderHold(final startTime=
-        startTime, final samplePeriod=1/f)
+  Modelica.Blocks.Discrete.ZeroOrderHold zeroOrderHold(
+    final startTime=startTime, final samplePeriod=1/f)
     annotation (Placement(transformation(extent={{-30,-10},{-10,10}})));
   Modelica.Blocks.Sources.SawTooth sawtooth(
     final period=1/f,
@@ -43,9 +42,9 @@ model SignalPWM "Generates a pulse width modulated (PWM) boolean fire signal"
     final startTime=startTime) if refType==SingleReferenceType.Sawtooth
     annotation (Placement(transformation(origin={-50,-50}, extent={{-10,-10},{10,10}})));
   Modelica.Blocks.Sources.Trapezoid triangle(
-    rising=0.5/f,
-    width=0,
-    falling=0.5/f,
+    final rising=0.5/f,
+    final width=0,
+    final falling=0.5/f,
     final period=1/f,
     final amplitude=1,
     final nperiod=-1,

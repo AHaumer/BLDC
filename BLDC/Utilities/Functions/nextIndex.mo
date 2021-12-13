@@ -1,4 +1,4 @@
-within BLDC.Functions;
+within BLDC.Utilities.Functions;
 function nextIndex "returns successor of index in a cyclic way"
   extends Modelica.Icons.Function;
   input Integer m "Max. index";

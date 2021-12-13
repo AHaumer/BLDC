@@ -48,11 +48,10 @@ model DemoBLDC "Test example: Brushless DC machine drive"
   Modelica.Electrical.Machines.Utilities.MultiTerminalBox terminalBox(m=smpmData.ms,
       terminalConnection="Y")
     annotation (Placement(transformation(extent={{10,-34},{30,-14}})));
-  parameter Utilities.SM_PermanentMagnetData smpmData(ms=5)
-                                                      "Synchronous machine data"
+  parameter Utilities.SM_PermanentMagnetData smpmData(ms=5) "Synchronous machine data"
     annotation (Placement(transformation(extent={{10,-80},{30,-60}})));
   BLDC.Sensors.HallSensor hallSensor(p=smpmData.p, m=smpmData.ms)
-                                                        annotation (Placement(
+    annotation (Placement(
         transformation(
         extent={{-10,10},{10,-10}},
         rotation=90,
@@ -77,8 +76,7 @@ model DemoBLDC "Test example: Brushless DC machine drive"
     offsetTorque=0,
     startTime=1.5)
     annotation (Placement(transformation(extent={{100,-50},{80,-30}})));
-  Modelica.Electrical.Polyphase.Sensors.CurrentQuasiRMSSensor currentRMSSensor(m=
-        smpmData.ms)
+  Modelica.Electrical.Polyphase.Sensors.CurrentQuasiRMSSensor currentRMSSensor(m=smpmData.ms)
     annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=90,
@@ -88,7 +86,7 @@ model DemoBLDC "Test example: Brushless DC machine drive"
         extent={{-10,-10},{10,10}},
         rotation=270,
         origin={0,-40})));
-  CommonBlocks.TriggeredMean triggeredMean
+  ToMSL.TriggeredMean triggeredMean
     annotation (Placement(transformation(extent={{50,0},{70,-20}})));
   Utilities.MeasurementTrigger measurementTrigger(m=smpmData.ms) annotation (
       Placement(transformation(

@@ -1,12 +1,12 @@
-within BLDC.CommonBlocks;
+within BLDC.ToMSL;
 block UnwrapAngle "Angle tracking observer"
   extends Modelica.Blocks.Interfaces.SISO(u(final unit="rad", displayUnit="deg"),
     y(final unit="rad", displayUnit="deg"));
+  parameter Modelica.Units.SI.Time Ti=1e-6 "Integral time constant of controller";
+  parameter Modelica.Units.SI.Angle phi0=0 "Initial angle";
   Modelica.Blocks.Interfaces.RealOutput w(final unit="rad/s", displayUnit="rpm")
     "Angular velocity"
     annotation (Placement(transformation(extent={{100,-70},{120,-50}})));
-  parameter Modelica.Units.SI.Time Ti=1e-6 "Integral time constant of controller";
-  parameter Modelica.Units.SI.Angle phi0=0 "Initial angle";
   Modelica.Blocks.Math.Cos cos1
     annotation (Placement(transformation(extent={{-70,-30},{-50,-10}})));
   Modelica.Blocks.Math.Sin sin1

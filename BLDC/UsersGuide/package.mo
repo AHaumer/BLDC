@@ -2,7 +2,6 @@ within BLDC;
 package UsersGuide "User's Guide"
   extends Modelica.Icons.Information;
 
-
 annotation (DocumentationClass=true, Documentation(info="<html>
 <p>
 This library is developed at <a href=\"https://www.oth-regensburg.de/\">OTH Regensburg</a> (Technical University of Applied Sciences), 

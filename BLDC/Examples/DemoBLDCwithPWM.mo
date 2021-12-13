@@ -50,11 +50,10 @@ model DemoBLDCwithPWM "Test example: Brushless DC machine drive"
   Modelica.Electrical.Machines.Utilities.MultiTerminalBox terminalBox(m=smpmData.ms,
       terminalConnection="Y")
     annotation (Placement(transformation(extent={{10,-34},{30,-14}})));
-  parameter Utilities.SM_PermanentMagnetData smpmData(ms=5)
-                                                      "Synchronous machine data"
+  parameter Utilities.SM_PermanentMagnetData smpmData(ms=5) "Synchronous machine data"
     annotation (Placement(transformation(extent={{10,-80},{30,-60}})));
   BLDC.Sensors.HallSensor hallSensor(p=smpmData.p, m=smpmData.ms)
-                                                        annotation (Placement(
+    annotation (Placement(
         transformation(
         extent={{-10,10},{10,-10}},
         rotation=90,
@@ -88,15 +87,15 @@ model DemoBLDCwithPWM "Test example: Brushless DC machine drive"
         extent={{10,-10},{-10,10}},
         rotation=90,
         origin={20,-10})));
-  FromMSL.SignalPWM                                          pwm(
+  FromMSL.SignalPWM pwm(
       useConstantDutyCycle=false,
-    f=fS,                         refType=BLDC.FromMSL.SingleReferenceType.Triangle)
-                                  annotation (Placement(transformation(
+      f=fS,
+      refType=BLDC.FromMSL.SingleReferenceType.Triangle)
+    annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
         origin={-40,20})));
-  Modelica.Electrical.PowerConverters.DCDC.Control.Voltage2DutyCycle adaptor(VLim=
-        VDCmax)
+  Modelica.Electrical.PowerConverters.DCDC.Control.Voltage2DutyCycle adaptor(VLim=VDCmax)
     annotation (Placement(transformation(extent={{-70,30},{-50,50}})));
   Modelica.Electrical.Polyphase.Basic.Star star(m=smpmData.mSystems) annotation (
      Placement(transformation(

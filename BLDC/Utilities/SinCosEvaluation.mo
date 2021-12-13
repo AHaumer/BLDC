@@ -1,6 +1,8 @@
 within BLDC.Utilities;
 block SinCosEvaluation "Evaluation of Sin/Cos-resolver signals"
   extends Modelica.Blocks.Icons.Block;
+  parameter Modelica.Units.SI.Time Ti=1e-6 "Integral time constant of controller";
+  parameter Modelica.Units.SI.Angle phi0=0 "Initial mechanical angle (zero position)";
   Modelica.Blocks.Interfaces.RealInput u[4] "Resolver signals"
     annotation (Placement(transformation(extent={{-140,-20},{-100,20}})));
   Modelica.Blocks.Interfaces.RealOutput phi(final unit="rad", displayUnit="deg")
@@ -9,8 +11,6 @@ block SinCosEvaluation "Evaluation of Sin/Cos-resolver signals"
   Modelica.Blocks.Interfaces.RealOutput w(final unit="rad/s", displayUnit="rpm")
     "Electrical angular velocity"
     annotation (Placement(transformation(extent={{100,-70},{120,-50}})));
-  parameter Modelica.Units.SI.Time Ti=1e-6 "Integral time constant of controller";
-  parameter Modelica.Units.SI.Angle phi0=0 "Initial mechanical angle (zero position)";
   Modelica.Blocks.Math.Feedback feedbackCos
     annotation (Placement(transformation(extent={{-70,-20},{-50,-40}})));
   Modelica.Blocks.Math.Feedback feedbackSin

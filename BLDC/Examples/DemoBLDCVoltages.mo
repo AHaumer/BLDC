@@ -16,7 +16,7 @@ model DemoBLDCVoltages "Test example: Demonstrate BLDC voltages"
         extent={{-10,-10},{10,10}},
         rotation=180,
         origin={-50,20})));
-  Utilities.ElectronicCommutator            electronicCommutator(m=m)
+  Utilities.ElectronicCommutator electronicCommutator(m=m)
     annotation (Placement(transformation(extent={{-40,30},{-20,50}})));
   Modelica.Electrical.PowerConverters.DCAC.Polyphase2Level inverter(m=m)
     annotation (Placement(transformation(

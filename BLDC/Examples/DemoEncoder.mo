@@ -40,7 +40,7 @@ model DemoEncoder "Demonstrate various encoder / resolver models"
         extent={{-10,10},{10,-10}},
         rotation=180,
         origin={20,-80})));
-  CommonBlocks.UnwrapAngle unwrapAngle(phi0=phi0)
+  ToMSL.UnwrapAngle unwrapAngle(phi0=phi0)
     annotation (Placement(transformation(extent={{50,-68},{70,-48}})));
 equation
   connect(position.flange, sinCosResolver.flange)

@@ -1,4 +1,4 @@
-within BLDC.CommonBlocks;
+within BLDC.ToMSL;
 block TriggeredRectifiedMean
   "Calculate rectified mean over period determined by trigger"
   extends Modelica.Blocks.Interfaces.SISO;
