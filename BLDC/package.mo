@@ -1,7 +1,7 @@
 within ;
 package BLDC "Brushless DC drives"
 
-  annotation (version="1.3.2", versionDate="2021-12-12",
+  annotation (version="1.3.3", versionDate="2021-12-12",
   uses(Modelica(version="4.0.0"), ModelicaServices(version="4.0.0"),
     Complex(version="4.0.0")),
     Documentation(info="<html>

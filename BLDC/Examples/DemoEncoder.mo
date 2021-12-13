@@ -42,8 +42,6 @@ model DemoEncoder "Demonstrate various encoder / resolver models"
         origin={20,-80})));
   CommonBlocks.UnwrapAngle unwrapAngle(phi0=phi0)
     annotation (Placement(transformation(extent={{50,-68},{70,-48}})));
-  Utilities.HallTimeSpan hallTimeSpan(p=p, m=m)
-    annotation (Placement(transformation(extent={{50,-100},{70,-80}})));
 equation
   connect(position.flange, sinCosResolver.flange)
     annotation (Line(points={{-10,0},{0,0},{0,30},{10,30}}, color={0,0,0}));
@@ -67,8 +65,6 @@ equation
     annotation (Line(points={{-10,0},{0,0},{0,80},{10,80}}, color={0,0,0}));
   connect(position.flange, speedSensor.flange)
     annotation (Line(points={{-10,0},{0,0},{0,60},{10,60}}, color={0,0,0}));
-  connect(hallSensor.yC, hallTimeSpan.uC) annotation (Line(points={{31,-80},{40,-80},
-          {40,-90},{48,-90}}, color={255,0,255}));
   connect(refFrequency.y, f2pos.u)
     annotation (Line(points={{-69,0},{-62,0}}, color={0,0,127}));
   annotation (experiment(

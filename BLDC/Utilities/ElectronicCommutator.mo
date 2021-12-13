@@ -9,8 +9,9 @@ block ElectronicCommutator "Polyphase electronic commutator"
   import Modelica.Math.wrapAngle;
 protected
   parameter SI.Angle wrappedOrientation[m]=wrapAngle(orientation, true) "Orientation of phases in the range [0,2*pi)";
-  SI.Angle rotorPosition=wrapAngle(arg(Modelica.ComplexMath.sum({if uC[k] then Modelica.ComplexMath.exp(j*orientation[k]) else Complex(0) for k in 1:m})), true)
-    "Rotor position in the range [0, 2*pi]";
+  Complex cRotorPosition=Modelica.ComplexMath.sum({if uC[k] then Modelica.ComplexMath.exp(j*orientation[k]) else Complex(0) for k in 1:m})
+    "Phasor pointing into the direction of the rotor";
+  SI.Angle rotorPosition=wrapAngle(arg(cRotorPosition), true) "Rotor position in the range [0, 2*pi]";
   SI.Angle diff[m] "Difference between orientation and rotor position";
 algorithm
   diff:=wrapAngle(wrappedOrientation - fill(rotorPosition, m), false);

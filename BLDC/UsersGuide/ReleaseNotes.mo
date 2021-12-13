@@ -3,6 +3,12 @@ class ReleaseNotes "Release Notes"
   extends Modelica.Icons.ReleaseNotes;
   annotation (Documentation(info="<html>
 
+<h4>v1.3.3 2021-12-12</h4>
+<ul>
+<li>Simplified the electronic commutator</li>
+<li>(Temporarily) removed HallTimeSpan from DemoEncoder</li>
+</ul>
+
 <h4>v1.3.2 2021-12-12</h4>
 <p>(Temporarily) included a copy of the SignalPWM from master branch of ModelicaStandardLibrary (availability of triangular carrier).</p>
 
