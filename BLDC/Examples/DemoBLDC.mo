@@ -88,6 +88,13 @@ model DemoBLDC "Test example: Brushless DC machine drive"
         extent={{-10,-10},{10,10}},
         rotation=270,
         origin={0,-40})));
+  CommonBlocks.TriggeredMean triggeredMean
+    annotation (Placement(transformation(extent={{50,0},{70,-20}})));
+  Utilities.MeasurementTrigger measurementTrigger(m=smpmData.ms) annotation (
+      Placement(transformation(
+        extent={{-10,-10},{10,10}},
+        rotation=270,
+        origin={60,20})));
 initial equation
   smpm.is[1:2] = zeros(2);
 equation
@@ -127,6 +134,12 @@ equation
                                                color={0,0,255}));
   connect(star.plug_p, terminalBox.starpoint) annotation (Line(points={{
           1.77636e-15,-30},{0,-30},{0,-28},{10,-28}}, color={0,0,255}));
+  connect(currentRMSSensor.I, triggeredMean.u) annotation (Line(points={{31,-10},
+          {48,-10}},               color={0,0,127}));
+  connect(measurementTrigger.y, triggeredMean.trigger)
+    annotation (Line(points={{60,9},{60,2}}, color={255,0,255}));
+  connect(hallSensor.yC, measurementTrigger.u) annotation (Line(points={{40,-71},
+          {40,-90},{100,-90},{100,40},{60,40},{60,32}}, color={255,0,255}));
   annotation (experiment(
       StopTime=2,
       Interval=1e-05,

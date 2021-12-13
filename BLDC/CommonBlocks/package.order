@@ -1,2 +1,7 @@
 IntervalTest
 UnwrapAngle
+MultiAnd
+MultiOr
+TriggeredMean
+TriggeredRectifiedMean
+TriggeredRootMeanSquare

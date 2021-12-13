@@ -3,6 +3,9 @@ class ReleaseNotes "Release Notes"
   extends Modelica.Icons.ReleaseNotes;
   annotation (Documentation(info="<html>
 
+<h4>v1.3.4 2021-12-12</h4>
+<p>Implemented some blocks to investigate current measurement.</p>
+
 <h4>v1.3.3 2021-12-12</h4>
 <ul>
 <li>Simplified the electronic commutator</li>
