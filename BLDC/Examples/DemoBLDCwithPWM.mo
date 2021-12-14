@@ -64,7 +64,7 @@ model DemoBLDCwithPWM "Test example: Brushless DC machine drive"
         rotation=270,
         origin={20,20})));
   Modelica.Electrical.Analog.Sources.ConstantVoltage constantVoltage(V=VDCmax)
-    annotation (Placement(transformation(extent={{30,40},{10,60}})));
+    annotation (Placement(transformation(extent={{30,60},{10,80}})));
   Utilities.ElectronicCommutator electronicCommutator(m=smpmData.ms,
     useConstantPWM=false)
     annotation (Placement(transformation(extent={{-20,10},{0,30}})));
@@ -102,6 +102,11 @@ model DemoBLDCwithPWM "Test example: Brushless DC machine drive"
         extent={{-10,-10},{10,10}},
         rotation=270,
         origin={0,-40})));
+  Modelica.Electrical.Analog.Sensors.CurrentSensor currentSensor annotation (
+      Placement(transformation(
+        extent={{10,-10},{-10,10}},
+        rotation=90,
+        origin={30,50})));
 initial equation
   smpm.is[1:2] = zeros(2);
 equation
@@ -116,12 +121,10 @@ equation
   connect(smpm.flange, hallSensor.flange)
     annotation (Line(points={{30,-40},{40,-40},{40,-50}}, color={0,0,0}));
   connect(constantVoltage.n, ground.p)
-    annotation (Line(points={{10,50},{10,40}},
+    annotation (Line(points={{10,70},{10,40}},
                                              color={0,0,255}));
   connect(ground.p, inverter.dc_n)
     annotation (Line(points={{10,40},{14,40},{14,30}}, color={0,0,255}));
-  connect(constantVoltage.p, inverter.dc_p) annotation (Line(points={{30,50},{30,
-          40},{26,40},{26,30}}, color={0,0,255}));
   connect(electronicCommutator.fire_p, inverter.fire_p)
     annotation (Line(points={{1,26},{8,26}},   color={255,0,255}));
   connect(hallSensor.yC, electronicCommutator.uC) annotation (Line(points={{40,-71},
@@ -144,6 +147,10 @@ equation
     annotation (Line(points={{-79,40},{-72,40}}, color={0,0,127}));
   connect(star.plug_p, terminalBox.starpoint)
     annotation (Line(points={{0,-30},{0,-28},{10,-28}}, color={0,0,255}));
+  connect(constantVoltage.p, currentSensor.p)
+    annotation (Line(points={{30,70},{30,60}}, color={0,0,255}));
+  connect(currentSensor.n, inverter.dc_p)
+    annotation (Line(points={{30,40},{26,40},{26,30}}, color={0,0,255}));
   annotation (experiment(
       StopTime=2,
       Interval=1e-05,

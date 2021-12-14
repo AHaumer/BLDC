@@ -8,8 +8,8 @@ block ElectronicCommutator "Polyphase electronic commutator"
   import Modelica.Math.wrapAngle;
   import Modelica.Electrical.Polyphase.Functions.symmetricOrientation;
   parameter Integer m(min=3) = 3 "Number of stator phases";
-  parameter Modelica.Units.SI.Angle orientation[m]=wrapAngle(symmetricOrientation(m), true)
-    "Orientation of phases within [0, 2*pi)";
+  parameter Modelica.Units.SI.Angle orientation[m]=symmetricOrientation(m)
+    "Orientation of phases";
   parameter Boolean useConstantPWM=true "Otherwise input" annotation(Evaluate=true);
   parameter Boolean ConstantPWM=true "PWM resp. direction" annotation(Dialog(enable=useConstantPWM));
   Modelica.Blocks.Interfaces.BooleanInput pwm if not useConstantPWM
@@ -24,20 +24,16 @@ block ElectronicCommutator "Polyphase electronic commutator"
   Modelica.Blocks.Interfaces.BooleanOutput fire_n[m]
     "Fire signals of negative potential transistors"
     annotation (Placement(transformation(extent={{100,-70},{120,-50}})));
-  output Integer sector "Rotorposition sector";
-  output Integer state[m] "Fire state of phases";
 protected
   constant SI.Angle eps=1e-3;
+  parameter Modelica.Units.SI.Angle wrappedOrientation[m]=wrapAngle(orientation, true) "Orientation of phases within [0, 2*pi)";
   Complex cRotorPosition=Modelica.ComplexMath.sum({if uC[k] then Modelica.ComplexMath.exp(j*orientation[k]) else Complex(0) for k in 1:m})
     "Phasor pointing into the direction of the rotor";
   SI.Angle rotorPosition=wrapAngle(arg(cRotorPosition), true) "Rotor position in the range [0, 2*pi]";
-  SI.Angle diff[m] "Difference between orientation and rotor position";
+  SI.Angle diff[m]=wrapAngle(orientation - fill(rotorPosition, m), false) "Difference between orientation and rotor position";
   Modelica.Blocks.Interfaces.BooleanInput internalPWM annotation (Placement(
         transformation(extent={{-94,56},{-86,64}}), iconTransformation(extent={{-94,
             56},{-86,64}})));
-algorithm
-  diff:=wrapAngle(orientation - fill(rotorPosition, m), false);
-  diff:={if abs(abs(diff[k]) - pi) < eps then 0 else diff[k] for k in 1:m};
 equation
   if useConstantPWM then
     internalPWM=ConstantPWM;
@@ -45,28 +41,24 @@ equation
     connect(internalPWM, pwm);
   end if;
   assert(mod(m,2)<>0, "Electronic commutator not working properly for even number of phases!");
-  sector=integer(2*m*rotorPosition/(2*pi));
-  for k in 1:m loop
-    if     abs(diff[k] - pi/2)<=pi/(2*m)+eps then
-      state[k]=+1;
-      fire_p[k]=internalPWM;
-      fire_n[k]=not internalPWM;
-    elseif abs(diff[k] + pi/2)<=pi/(2*m)+eps then
-      state[k]=-1;
-      fire_p[k]=not internalPWM;
-      fire_n[k]=internalPWM;
-    else
-      state[k]= 0;
-      fire_p[k]=false;
-      fire_n[k]=false;
-    end if;
-  end for;
 /*
   fire_p={if abs(diff[k] - pi/2)<=pi/(2*m)+eps then internalPWM
       elseif abs(diff[k] + pi/2)<=pi/(2*m)+eps then not internalPWM else false for k in 1:m};
   fire_n={if abs(diff[k] + pi/2)<=pi/(2*m)+eps then internalPWM
       elseif abs(diff[k] - pi/2)<=pi/(2*m)+eps then not internalPWM else false for k in 1:m};
 */
+  for k in 1:m loop
+    if     abs(diff[k] - pi/2)<=pi/(2*m)+eps then
+      fire_p[k]=internalPWM;
+      fire_n[k]=not internalPWM;
+    elseif abs(diff[k] + pi/2)<=pi/(2*m)+eps then
+      fire_p[k]=not internalPWM;
+      fire_n[k]=internalPWM;
+    else
+      fire_p[k]=false;
+      fire_n[k]=false;
+    end if;
+  end for;
   annotation (Documentation(info="<html>
 <p>
 For every Hall signal <code>uC[k]=true</code>, the phasor <code>exp(-j*orientation[k])</code> is added, else zero. 

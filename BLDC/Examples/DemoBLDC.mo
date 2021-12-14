@@ -62,7 +62,7 @@ model DemoBLDC "Test example: Brushless DC machine drive"
         rotation=270,
         origin={20,20})));
   Modelica.Electrical.Analog.Sources.SignalVoltage signalVoltage
-    annotation (Placement(transformation(extent={{30,40},{10,60}})));
+    annotation (Placement(transformation(extent={{30,60},{10,80}})));
   Utilities.ElectronicCommutator electronicCommutator(m=smpmData.ms)
     annotation (Placement(transformation(extent={{-20,10},{0,30}})));
   Modelica.Blocks.Sources.Ramp voltageRamp(
@@ -86,13 +86,20 @@ model DemoBLDC "Test example: Brushless DC machine drive"
         extent={{-10,-10},{10,10}},
         rotation=270,
         origin={0,-40})));
-  ToMSL.TriggeredMean triggeredMean
-    annotation (Placement(transformation(extent={{50,0},{70,-20}})));
+  ToMSL.TriggeredMean triggeredMeanDC
+    annotation (Placement(transformation(extent={{50,40},{70,60}})));
   Utilities.MeasurementTrigger measurementTrigger(m=smpmData.ms) annotation (
       Placement(transformation(
         extent={{-10,-10},{10,10}},
-        rotation=270,
-        origin={60,20})));
+        rotation=180,
+        origin={80,20})));
+  Modelica.Electrical.Analog.Sensors.CurrentSensor currentSensor annotation (
+      Placement(transformation(
+        extent={{10,-10},{-10,10}},
+        rotation=90,
+        origin={30,50})));
+  ToMSL.TriggeredMean triggeredMeanAC
+    annotation (Placement(transformation(extent={{50,0},{70,-20}})));
 initial equation
   smpm.is[1:2] = zeros(2);
 equation
@@ -107,18 +114,15 @@ equation
   connect(smpm.flange, hallSensor.flange)
     annotation (Line(points={{30,-40},{40,-40},{40,-50}}, color={0,0,0}));
   connect(signalVoltage.n, ground.p)
-    annotation (Line(points={{10,50},{10,40}},   color={0,0,255}));
+    annotation (Line(points={{10,70},{10,40}},   color={0,0,255}));
   connect(ground.p, inverter.dc_n)
     annotation (Line(points={{10,40},{14,40},{14,30}}, color={0,0,255}));
-  connect(signalVoltage.p, inverter.dc_p)
-    annotation (Line(points={{30,50},{30,40},{26,40},{26,30}},
-                                                             color={0,0,255}));
   connect(electronicCommutator.fire_p, inverter.fire_p)
     annotation (Line(points={{1,26},{8,26}},   color={255,0,255}));
   connect(hallSensor.yC, electronicCommutator.uC) annotation (Line(points={{40,-71},
           {40,-90},{-10,-90},{-10,8}},      color={255,0,255}));
   connect(voltageRamp.y, signalVoltage.v)
-    annotation (Line(points={{-79,40},{-70,40},{-70,80},{20,80},{20,62}},
+    annotation (Line(points={{-79,40},{-70,40},{-70,90},{20,90},{20,82}},
                                                       color={0,0,127}));
   connect(loadTorque.flange, loadInertia.flange_b)
     annotation (Line(points={{80,-40},{70,-40}}, color={0,0,0}));
@@ -132,12 +136,20 @@ equation
                                                color={0,0,255}));
   connect(star.plug_p, terminalBox.starpoint) annotation (Line(points={{
           1.77636e-15,-30},{0,-30},{0,-28},{10,-28}}, color={0,0,255}));
-  connect(currentRMSSensor.I, triggeredMean.u) annotation (Line(points={{31,-10},
-          {48,-10}},               color={0,0,127}));
-  connect(measurementTrigger.y, triggeredMean.trigger)
-    annotation (Line(points={{60,9},{60,2}}, color={255,0,255}));
+  connect(signalVoltage.p, currentSensor.p)
+    annotation (Line(points={{30,70},{30,60}}, color={0,0,255}));
+  connect(currentSensor.n, inverter.dc_p)
+    annotation (Line(points={{30,40},{26,40},{26,30}}, color={0,0,255}));
+  connect(currentSensor.i, triggeredMeanDC.u)
+    annotation (Line(points={{41,50},{48,50}}, color={0,0,127}));
+  connect(measurementTrigger.y, triggeredMeanDC.trigger)
+    annotation (Line(points={{69,20},{60,20},{60,38}}, color={255,0,255}));
   connect(hallSensor.yC, measurementTrigger.u) annotation (Line(points={{40,-71},
-          {40,-90},{100,-90},{100,40},{60,40},{60,32}}, color={255,0,255}));
+          {40,-90},{100,-90},{100,20},{92,20}}, color={255,0,255}));
+  connect(currentRMSSensor.I, triggeredMeanAC.u)
+    annotation (Line(points={{31,-10},{48,-10}}, color={0,0,127}));
+  connect(measurementTrigger.y, triggeredMeanAC.trigger)
+    annotation (Line(points={{69,20},{60,20},{60,2}}, color={255,0,255}));
   annotation (experiment(
       StopTime=2,
       Interval=1e-05,
