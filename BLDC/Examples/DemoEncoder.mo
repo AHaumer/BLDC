@@ -41,7 +41,11 @@ model DemoEncoder "Demonstrate various encoder / resolver models"
         rotation=180,
         origin={20,-80})));
   ToMSL.UnwrapAngle unwrapAngle(phi0=phi0)
-    annotation (Placement(transformation(extent={{50,-68},{70,-48}})));
+    annotation (Placement(transformation(extent={{70,-70},{90,-50}})));
+  Utilities.HallTimeSpan hallTimeSpan(
+    p=p,
+    m=m,
+    phi0=phi0) annotation (Placement(transformation(extent={{50,-90},{70,-70}})));
 equation
   connect(position.flange, sinCosResolver.flange)
     annotation (Line(points={{-10,0},{0,0},{0,30},{10,30}}, color={0,0,0}));
@@ -59,7 +63,7 @@ equation
   connect(incrementalEncoder.y, encoderPulseCount.u) annotation (Line(points={{31,0},{
           40,0},{40,-30},{48,-30}},         color={255,0,255}));
   connect(hallSensor.y, unwrapAngle.u)
-    annotation (Line(points={{31,-74},{40,-74},{40,-58},{48,-58}},
+    annotation (Line(points={{31,-74},{40,-74},{40,-60},{68,-60}},
                                                color={0,0,127}));
   connect(position.flange, angleSensor.flange)
     annotation (Line(points={{-10,0},{0,0},{0,80},{10,80}}, color={0,0,0}));
@@ -67,6 +71,8 @@ equation
     annotation (Line(points={{-10,0},{0,0},{0,60},{10,60}}, color={0,0,0}));
   connect(refFrequency.y, f2pos.u)
     annotation (Line(points={{-69,0},{-62,0}}, color={0,0,127}));
+  connect(hallSensor.yC, hallTimeSpan.uC)
+    annotation (Line(points={{31,-80},{48,-80}}, color={255,0,255}));
   annotation (experiment(
       StopTime=3,
       Interval=1e-05,

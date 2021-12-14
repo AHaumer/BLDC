@@ -3,6 +3,13 @@ class ReleaseNotes "Release Notes"
   extends Modelica.Icons.ReleaseNotes;
   annotation (Documentation(info="<html>
 
+<h4>v1.5.0 2021-12-14</h4>
+<ul>
+<li>double-checked the electronic commutator</li>
+<li>replaced utility function nextIndex by (more flexible) addIndex</li>
+<li>added again HallTimeSpan to DemoEncoder for testing</li>
+</ul>
+
 <h4>v1.4.0 2021-12-13</h4>
 <ul>
 <li>Implemented some blocks to investigate current measurement</li>
