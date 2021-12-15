@@ -3,6 +3,12 @@ class ReleaseNotes "Release Notes"
   extends Modelica.Icons.ReleaseNotes;
   annotation (Documentation(info="<html>
 
+<h4>v1.6.0 2021-12-15</h4>
+<ul>
+<li>replaced getEventIndex by firstTrueIndex</li>
+<li>vectorized loops for sake of performance</li>
+</ul>
+
 <h4>v1.5.0 2021-12-14</h4>
 <ul>
 <li>double-checked the electronic commutator</li>

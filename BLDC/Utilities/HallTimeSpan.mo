@@ -4,8 +4,8 @@ block HallTimeSpan "Time span between edges of Hall signals"
   import Modelica.Units.SI;
   import Modelica.Constants.pi;
   import Modelica.Constants.eps;
-  import BLDC.Utilities.Functions.getEventIndex;
-  import BLDC.Utilities.Functions.addIndex;
+  import Modelica.Math.BooleanVectors.firstTrueIndex;
+  import BLDC.Utilities.addIndex;
   parameter Integer p(final min=1, start=2) "Number of pole pairs";
   parameter Integer m(min=3) = 3 "Number of stator phases";
   parameter SI.Angle orientation[m]=
@@ -32,12 +32,12 @@ initial equation
 equation
   der(phi)= w;
   when edge(uC) then
-    w= (if not uC[addIndex(getEventIndex(m,uC,pre(uC)), 1, m)] then +1 else -1)*
+    w= (if not uC[addIndex(firstTrueIndex(uC and not pre(uC)), 1, m)] then +1 else -1)*
        (if noEvent(time - pre(t0) < eps) or pre(firstEdge) then 0 else 2*pi/(2*m)/(time - pre(t0)));
     firstEdge= false;
     t0= time;
   elsewhen edge(notC) then
-    w= (if not uC[addIndex(getEventIndex(m,notC,pre(notC)), 1, m)] then -1 else +1)*
+    w= (if not uC[addIndex(firstTrueIndex(notC and not pre(notC)), 1, m)] then -1 else +1)*
        (if noEvent(time - pre(t0) < eps) or pre(firstEdge) then 0 else 2*pi/(2*m)/(time - pre(t0)));
     firstEdge= false;
     t0= time;

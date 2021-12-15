@@ -41,24 +41,10 @@ equation
     connect(internalPWM, pwm);
   end if;
   assert(mod(m,2)<>0, "Electronic commutator not working properly for even number of phases!");
-/*
   fire_p={if abs(diff[k] - pi/2)<=pi/(2*m)+eps then internalPWM
       elseif abs(diff[k] + pi/2)<=pi/(2*m)+eps then not internalPWM else false for k in 1:m};
   fire_n={if abs(diff[k] + pi/2)<=pi/(2*m)+eps then internalPWM
       elseif abs(diff[k] - pi/2)<=pi/(2*m)+eps then not internalPWM else false for k in 1:m};
-*/
-  for k in 1:m loop
-    if     abs(diff[k] - pi/2)<=pi/(2*m)+eps then
-      fire_p[k]=internalPWM;
-      fire_n[k]=not internalPWM;
-    elseif abs(diff[k] + pi/2)<=pi/(2*m)+eps then
-      fire_p[k]=not internalPWM;
-      fire_n[k]=internalPWM;
-    else
-      fire_p[k]=false;
-      fire_n[k]=false;
-    end if;
-  end for;
   annotation (Documentation(info="<html>
 <p>
 For every Hall signal <code>uC[k]=true</code>, the phasor <code>exp(-j*orientation[k])</code> is added, else zero. 

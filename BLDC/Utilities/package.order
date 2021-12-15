@@ -2,8 +2,8 @@ SinCosEvaluation
 EncoderTimeSpan
 EncoderPulseCount
 HallTimeSpan
+addIndex
 ElectronicCommutator3phase
 SM_PermanentMagnetData
 ElectronicCommutator
 MeasurementTrigger
-Functions
