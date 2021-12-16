@@ -3,19 +3,23 @@ record Smpm1FT7102
   "Parameters for 1FT7102"
   import Modelica.Units.SI;
   import Modelica.Constants.pi;
+  import Modelica.Units.Conversions.from_degC;
+  import Modelica.Electrical.Machines.Thermal.Constants.alpha20Copper;
   extends SmpmData(
     MachineType="1FT7102",
     tauNominal=28.09,
     wNominal=2*pi*fsNominal/p,
     IsNominal=8,
-    VsNominal=204.35,
-    TsNominal=293.15,
-    TrNominal=293.15,
+    VsNominal=205.66,
+    TsNominal=from_degC(95),
+    TrNominal=from_degC(95),
     Jr=9.14e-3,
     p=5,
     fsNominal=125,
     VsOpenCircuit=212.3/sqrt(3)*1.5,
     Rs=m/3*0.60,
+    TsRef=from_degC(20),
+    alpha20s=alpha20Copper,
     Lssigma=m/3*0.1*12.5e-3,
     Lmd=m/3*0.9*12.5e-3,
     Lmq=Lmd,

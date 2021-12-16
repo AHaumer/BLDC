@@ -78,7 +78,7 @@ model SMPM_NominalOperation
   Modelica.Mechanics.Rotational.Sources.ConstantSpeed constantSpeed(w_fixed=
         smpmData.wNominal)
     annotation (Placement(transformation(extent={{80,-30},{60,-10}})));
-  parameter ParameterRecords.SmpmData smpmData(useDamperCage=false)
+  parameter ParameterRecords.SmpmData smpmData
     "Synchronous machine data"
     annotation (Placement(transformation(extent={{-20,-60},{0,-40}})));
   Modelica.Electrical.Polyphase.Basic.Star starM(m=smpmData.mSystems)

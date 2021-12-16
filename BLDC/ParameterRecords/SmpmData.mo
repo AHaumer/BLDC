@@ -3,6 +3,7 @@ record SmpmData
   "Common parameters for synchronous machines with permanent magnet"
   import Modelica.Units.SI;
   import Modelica.Constants.pi;
+  import Modelica.Units.Conversions.from_degC;
   parameter String MachineType="mod.Std.";
   parameter Integer mSystems=Modelica.Electrical.Polyphase.Functions.numberOfSymmetricBaseSystems(m)
     "Number of symmetric base systems" annotation(Dialog(enable=false));
@@ -15,9 +16,9 @@ record SmpmData
     annotation(Dialog(tab="Nominal operation"));
   parameter SI.Voltage VsNominal=110.5 "Nominal voltage per phase"
     annotation(Dialog(tab="Nominal operation"));
-  parameter SI.Temperature TsNominal(displayUnit="degC")=293.15 "Nominal stator temperature"
+  parameter SI.Temperature TsNominal(displayUnit="degC")=from_degC(20) "Nominal stator temperature"
     annotation(Dialog(tab="Nominal operation"));
-  parameter SI.Temperature TrNominal(displayUnit="degC")=293.15 "Nominal damper cage temperature"
+  parameter SI.Temperature TrNominal(displayUnit="degC")=from_degC(20) "Nominal damper cage temperature"
     annotation(Dialog(tab="Nominal operation", enable=useDamperCage));
   extends BLDC.ToMSL.SM_PermanentMagnetData(
     Jr=0.29,
@@ -25,6 +26,8 @@ record SmpmData
     fsNominal=50,
     VsOpenCircuit=100,
     Rs=m/3*0.03,
+    TsRef=from_degC(20),
+    alpha20s=0,
     Lssigma=m/3*0.1/(2*pi*fsNominal),
     Lmd=m/3*0.3/(2*pi*fsNominal),
     Lmq=Lmd,
@@ -33,6 +36,8 @@ record SmpmData
     Lrsigmaq=Lrsigmad,
     Rrd=m/3*0.04,
     Rrq=Rrd,
+    TrRef=from_degC(20),
+    alpha20r=0,
     frictionParameters(
       PRef=0,
       wRef=wNominal,
