@@ -3,16 +3,16 @@ model DemoBLDCwithPWM "Test example: Brushless DC machine drive"
   extends Modelica.Icons.Example;
   import Modelica.Units.SI;
   import Modelica.Constants.pi;
-  parameter SI.Voltage VDC=smpmData.VsOpenCircuit*Modelica.Electrical.Polyphase.Functions.factorY2DC(smpmData.ms) "Nominal DC voltage";
-  parameter SI.Voltage VDCmax=1.1*VDC "Max. DC voltage";
+  parameter SI.Voltage VDC=smpmData.VsNominal*Modelica.Electrical.Polyphase.Functions.factorY2DC(smpmData.m) "Nominal DC voltage";
+  parameter SI.Voltage VDCmax=1.1*VDC "max. DC voltage";
   parameter SI.Frequency fS=1000 "Switching frequency";
-  parameter SI.AngularVelocity wNominal(displayUnit="rpm")=2*pi*smpmData.fsNominal/smpmData.p "Nominal speed";
-  parameter SI.Torque tauNominal=181.4 "Nominal torque";
   parameter SI.Inertia JLoad=smpmData.Jr "Load inertia";
   Modelica.Magnetic.FundamentalWave.BasicMachines.SynchronousMachines.SM_PermanentMagnet
     smpm(
-    m=smpmData.ms,
+    m=smpmData.m,
     p=smpmData.p,
+    TsOperational=smpmData.TsNominal,
+    TrOperational=smpmData.TrNominal,
     fsNominal=smpmData.fsNominal,
     Rs=smpmData.Rs,
     TsRef=smpmData.TsRef,
@@ -35,9 +35,7 @@ model DemoBLDCwithPWM "Test example: Brushless DC machine drive"
     Rrq=smpmData.Rrq,
     TrRef=smpmData.TrRef,
     permanentMagnetLossParameters=smpmData.permanentMagnetLossParameters,
-    TsOperational=293.15,
     alpha20s=smpmData.alpha20s,
-    TrOperational=293.15,
     alpha20r=smpmData.alpha20r)
     annotation (Placement(transformation(extent={{10,-50},{30,-30}})));
   Modelica.Electrical.Analog.Basic.Ground ground annotation (Placement(
@@ -47,25 +45,25 @@ model DemoBLDCwithPWM "Test example: Brushless DC machine drive"
         rotation=270)));
   Modelica.Mechanics.Rotational.Components.Inertia loadInertia(J=JLoad)
     annotation (Placement(transformation(extent={{50,-50},{70,-30}})));
-  Modelica.Electrical.Machines.Utilities.MultiTerminalBox terminalBox(m=smpmData.ms,
+  Modelica.Electrical.Machines.Utilities.MultiTerminalBox terminalBox(m=smpmData.m,
       terminalConnection="Y")
     annotation (Placement(transformation(extent={{10,-34},{30,-14}})));
-  parameter Utilities.SM_PermanentMagnetData smpmData(ms=5) "Synchronous machine data"
+  parameter ParameterRecords.SmpmData smpmData(m=5) "Synchronous machine data"
     annotation (Placement(transformation(extent={{10,-80},{30,-60}})));
-  BLDC.Sensors.HallSensor hallSensor(p=smpmData.p, m=smpmData.ms)
+  BLDC.Sensors.HallSensor hallSensor(p=smpmData.p, m=smpmData.m)
     annotation (Placement(
         transformation(
         extent={{-10,10},{10,-10}},
         rotation=90,
         origin={40,-60})));
-  Modelica.Electrical.PowerConverters.DCAC.Polyphase2Level inverter(m=smpmData.ms)
+  Modelica.Electrical.PowerConverters.DCAC.Polyphase2Level inverter(m=smpmData.m)
     annotation (Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=270,
         origin={20,20})));
   Modelica.Electrical.Analog.Sources.ConstantVoltage constantVoltage(V=VDCmax)
     annotation (Placement(transformation(extent={{30,60},{10,80}})));
-  Utilities.ElectronicCommutator electronicCommutator(m=smpmData.ms,
+  Utilities.ElectronicCommutator electronicCommutator(m=smpmData.m,
     useConstantPWM=false)
     annotation (Placement(transformation(extent={{-20,10},{0,30}})));
   Modelica.Blocks.Sources.Ramp voltageRamp(
@@ -77,12 +75,12 @@ model DemoBLDCwithPWM "Test example: Brushless DC machine drive"
         rotation=0,
         origin={-90,40})));
   Modelica.Mechanics.Rotational.Sources.TorqueStep loadTorque(
-    stepTorque=-tauNominal,
+    stepTorque=-smpmData.tauNominal,
     offsetTorque=0,
     startTime=1.5)
     annotation (Placement(transformation(extent={{100,-50},{80,-30}})));
   Modelica.Electrical.Polyphase.Sensors.CurrentQuasiRMSSensor currentRMSSensor(m=
-    smpmData.ms)
+        smpmData.m)
     annotation (Placement(transformation(
         extent={{10,-10},{-10,10}},
         rotation=90,

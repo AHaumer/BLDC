@@ -5,3 +5,6 @@ MultiOr
 TriggeredMean
 TriggeredRectifiedMean
 TriggeredRootMeanSquare
+InductionMachineData
+SM_ReluctanceRotorData
+SM_PermanentMagnetData

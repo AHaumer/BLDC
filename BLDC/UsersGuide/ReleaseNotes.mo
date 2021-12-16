@@ -3,6 +3,13 @@ class ReleaseNotes "Release Notes"
   extends Modelica.Icons.ReleaseNotes;
   annotation (Documentation(info="<html>
 
+<h4>v1.7.0 2021-12-17</h4>
+<ul>
+<li>extended ParameterRecords.SmpmData to ease implementation of other machine parameter sets</li>
+<li>suggestion: remove final from MSL.InductionmachineData(m, statorCoreParameters(m)) to enable handling of other number of phases</li>
+<li>implemented example SMPM_NominalOperation to validate nominal operation</li>
+</ul>
+
 <h4>v1.6.0 2021-12-15</h4>
 <ul>
 <li>replaced getEventIndex by firstTrueIndex</li>
