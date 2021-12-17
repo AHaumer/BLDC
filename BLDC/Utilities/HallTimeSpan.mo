@@ -5,7 +5,7 @@ block HallTimeSpan "Time span between edges of Hall signals"
   import Modelica.Constants.pi;
   import Modelica.Constants.eps;
   import Modelica.Math.BooleanVectors.firstTrueIndex;
-  import BLDC.Utilities.addIndex;
+  import BLDC.Functions.addIndex;
   parameter Integer p(final min=1, start=2) "Number of pole pairs";
   parameter Integer m(min=3) = 3 "Number of stator phases";
   parameter SI.Angle orientation[m]=
@@ -13,7 +13,7 @@ block HallTimeSpan "Time span between edges of Hall signals"
   parameter SI.Angle phi0=0 "Initial mechanical angle (zero position)";
   Modelica.Blocks.Interfaces.BooleanInput uC[m] "Hall signals"
     annotation (Placement(transformation(extent={{-140,-20},{-100,20}})));
-  Modelica.Blocks.Interfaces.RealOutput w(final unit="rad/s", displayUnit="rpm")
+  Modelica.Blocks.Interfaces.RealOutput w(final unit="rad/s", displayUnit="rpm", start=0, fixed=true)
     "Mechanical anglar velocity"
     annotation (Placement(transformation(extent={{100,-10},{120,10}})));
   Modelica.Blocks.Interfaces.RealOutput phi(final unit="rad", displayUnit="deg")

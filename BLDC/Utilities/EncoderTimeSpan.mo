@@ -1,51 +1,23 @@
 within BLDC.Utilities;
 block EncoderTimeSpan "Time span between edges of incremental encoder signals"
   extends Modelica.Blocks.Icons.DiscreteBlock;
+  extends BLDC.Interfaces.EncoderEvaluation;
   import Modelica.Constants.pi;
   import Modelica.Constants.eps;
-  parameter Integer pRev(final min=1, start=128) "Pulses per revolution";
-  parameter Modelica.Units.SI.Angle phi0=0 "Initial mechanical angle (zero position)";
-  Modelica.Blocks.Interfaces.BooleanInput u[3] "Encoder signals"
-    annotation (Placement(transformation(extent={{-140,-20},{-100,20}})));
-  Modelica.Blocks.Interfaces.RealOutput w(final unit="rad/s", displayUnit="rpm")
-    "Mechanical anglar velocity"
-    annotation (Placement(transformation(extent={{100,-10},{120,10}})));
-  Modelica.Blocks.Interfaces.RealOutput phi(final unit="rad", displayUnit="deg")
-    "Mechanical angle"
-    annotation (Placement(transformation(extent={{100,50},{120,70}})));
+  import BLDC.Functions.directionOfRotation;
 protected
-  Boolean A=u[2];
-  Boolean B=u[3];
-  Boolean notA=not A;
-  Boolean notB=not B;
   Boolean firstEdge "true at first edge";
-  Modelica.Units.SI.Time t0 "time instant of last edge";
+  discrete Modelica.Units.SI.Time t0 "time instant of preceding edge";
 initial equation
-  pre(A)=true;
-  pre(B)=false;
-  pre(notA)=false;
-  pre(notB)=true;
   firstEdge=true;
   t0=time;
-  phi=phi0;
 equation
-  der(phi)= w;
-  when edge(A) then
-    w=(if notB then 1 else -1)*(if noEvent(time - pre(t0) < eps) or pre(firstEdge) then 0 else 2*pi/(4*pRev)/(time - pre(t0)));
+  when {edge(A), edge(notA), edge(B), edge(notB)} then
+    w=directionOfRotation(A, pre(A), B, pre(B))*
+      (if noEvent(time - pre(t0) < eps) or pre(firstEdge) then 0
+       else 2*pi/(4*pRev)/(time - pre(t0)));
     firstEdge=false;
     t0=time;
-  elsewhen edge(notA) then
-    w=(if B then 1 else -1)*(if noEvent(time - pre(t0) < eps) or pre(firstEdge) then 0 else 2*pi/(4*pRev)/(time - pre(t0)));
-    firstEdge=false;
-    t0= time;
-  elsewhen edge(B) then
-    w=(if A then 1 else -1)*(if noEvent(time - pre(t0) < eps) or pre(firstEdge) then 0 else 2*pi/(4*pRev)/(time - pre(t0)));
-    firstEdge=false;
-    t0= time;
-  elsewhen edge(notB) then
-    w=(if notA then 1 else -1)*(if noEvent(time - pre(t0) < eps) or pre(firstEdge) then 0 else 2*pi/(4*pRev)/(time - pre(t0)));
-    firstEdge=false;
-    t0= time;
   end when;
   annotation (Documentation(info="<html>
 <p>Evaluates the input signals from an <a href=\"modelica://BLDC.Sensors.IncrementalEncoder\">IncrementalEncoder</a>:</p>
@@ -71,14 +43,6 @@ Note that this algorithm depends on the accuracy of the representation of time,
 but usually gives better results than counting edges during a time gate.
 </p>
 </html>"), Icon(graphics={
-        Line(points={{-80,20},{-60,20},{-60,40},{-20,40},{-20,20},{20,20},{20,40},
-              {60,40},{60,20},{80,20}}, color={0,0,0}),
-        Line(points={{-80,-40},{-40,-40},{-40,-20},{0,-20},{0,-40},{40,-40},{40,-20},
-              {80,-20},{80,-40}},      color={0,0,0}),
-        Text(
-          extent={{60,20},{100,-20}},
-          textColor={0,0,0},
-          textString="w"),
         Line(
           points={{-60,80},{-60,40}},
           color={0,0,0},

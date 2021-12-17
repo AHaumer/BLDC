@@ -1,4 +1,4 @@
-within BLDC.Utilities;
+within BLDC.Functions;
 function addIndex "add to an index in a cyclic way"
   extends Modelica.Icons.Function;
   input Integer k "Index";
