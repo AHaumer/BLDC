@@ -48,7 +48,7 @@ model DemoBLDCwithPWM "Test example: Brushless DC machine drive"
   Modelica.Electrical.Machines.Utilities.MultiTerminalBox terminalBox(m=smpmData.m,
       terminalConnection="Y")
     annotation (Placement(transformation(extent={{10,-34},{30,-14}})));
-  parameter ParameterRecords.SmpmData smpmData(m=5) "Synchronous machine data"
+  parameter ParameterRecords.SmpmData smpmData      "Synchronous machine data"
     annotation (Placement(transformation(extent={{10,-80},{30,-60}})));
   BLDC.Sensors.HallSensor hallSensor(p=smpmData.p, m=smpmData.m)
     annotation (Placement(

@@ -3,7 +3,7 @@ model DemoBLDCVoltages "Test example: Demonstrate BLDC voltages"
   extends Modelica.Icons.Example;
   import Modelica.Units.SI;
   import Modelica.Constants.pi;
-  parameter Integer m=5 "Number of phases";
+  parameter Integer m=3 "Number of phases";
   parameter Integer p(final min=1)=2 "Number of pole pairs";
   parameter SI.Voltage VDC=100*Modelica.Electrical.Polyphase.Functions.factorY2DC(m) "Nominal DC voltage";
   parameter SI.Frequency fNominal=50 "Nominal frequqncy";

@@ -2,7 +2,7 @@ within BLDC.Examples;
 model DemoEncoder "Demonstrate various encoder / resolver models"
   extends Modelica.Icons.Example;
   import Modelica.Constants.pi;
-  constant Integer m=5 "Number of phases";
+  constant Integer m=3 "Number of phases";
   parameter Integer p(final min=1)=2 "Number of pole pairs";
   parameter Integer pRev(final min=1)=128 "Pulses per revolution";
   parameter Modelica.Units.SI.Angle phi0=0 "Initial mechanical angle (zero position)";
