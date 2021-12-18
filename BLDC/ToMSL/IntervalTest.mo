@@ -30,6 +30,7 @@ equation
     connect(upperLimitInternal, upperLimit);
     connect(lowerLimitInternal, lowerLimit);
   end if;
+  assert(upperLimitInternal>lowerLimitInternal,"Erroneous interval limits");
   if ClosedOnLeft then
     if ClosedOnRight then
       if InsideInterval then

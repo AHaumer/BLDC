@@ -5,7 +5,7 @@ function directionOfRotation "Detect direction of rotation"
   input Boolean preA "pre(Track A)";
   input Boolean B "Track B";
   input Boolean preB "pre(Track B)";
-  output Integer dir;
+  output Integer dir "Direction of rotation";
 algorithm
   dir:= if ((A and not preA and not B) or (not A and preA and B) or
             (B and not preB and A) or (not B and preB and not A)) then +1

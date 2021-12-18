@@ -77,7 +77,7 @@ equation
   connect(hallSensor.yC, hallTimeSpan.uC)
     annotation (Line(points={{31,-80},{48,-80}}, color={255,0,255}));
   connect(incrementalEncoder.y, encoderTimeAndCount.u)
-    annotation (Line(points={{31,50},{46,50}}, color={255,0,255}));
+    annotation (Line(points={{31,50},{48,50}}, color={255,0,255}));
   annotation (experiment(
       StopTime=3,
       Interval=1e-05,

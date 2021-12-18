@@ -4,11 +4,10 @@ function addIndex "add to an index in a cyclic way"
   input Integer k "Index";
   input Integer a "Addend";
   input Integer m "Max. index";
-  output Integer result "Successor";
+  output Integer result=1 + mod(k + a - 1, m) "Resulting index";
 algorithm
   assert(k>=1 and k<=m, "Index out of range");
-  result:=1 + mod(k + a - 1, m);
-  annotation (Documentation(info="<html>
+  annotation (Inline=true, Documentation(info="<html>
 <p><pre>
   result:= k + a;
 </pre></p>
