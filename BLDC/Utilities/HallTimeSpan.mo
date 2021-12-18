@@ -31,12 +31,12 @@ initial equation
   phi=phi0;
 equation
   der(phi)= w;
-  when edge(uC) then
+  when {edge(uC[k]) for k in 1:m} then
     w= (if not uC[addIndex(firstTrueIndex(uC and not pre(uC)), 1, m)] then +1 else -1)*
        (if noEvent(time - pre(t0) < eps) or pre(firstEdge) then 0 else 2*pi/(2*m)/(time - pre(t0)));
     firstEdge= false;
     t0= time;
-  elsewhen edge(notC) then
+  elsewhen {edge(notC[k]) for k in 1:m} then
     w= (if not uC[addIndex(firstTrueIndex(notC and not pre(notC)), 1, m)] then -1 else +1)*
        (if noEvent(time - pre(t0) < eps) or pre(firstEdge) then 0 else 2*pi/(2*m)/(time - pre(t0)));
     firstEdge= false;

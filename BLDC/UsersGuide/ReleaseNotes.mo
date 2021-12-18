@@ -3,6 +3,9 @@ class ReleaseNotes "Release Notes"
   extends Modelica.Icons.ReleaseNotes;
   annotation (Documentation(info="<html>
 
+<h4>v1.9.0 2021-12-17</h4>
+<p>adapted HallTimeSpan to translate with OM</p>
+
 <h4>v1.8.0 2021-12-17</h4>
 <ul>
 <li>implemented an encode evaluation based on a combination of time measurement and pulse count</li>
