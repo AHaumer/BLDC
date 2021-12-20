@@ -27,7 +27,7 @@ record InductionMachineData "Common parameters for induction machines"
       wRef=2*pi*fsNominal/p) "Friction loss parameter record"
     annotation (Dialog(tab="Losses"));
   parameter Modelica.Electrical.Machines.Losses.CoreParameters statorCoreParameters(
-    m=m,
+    final m=m,
     PRef=0,
     VRef=100,
     wRef=2*pi*fsNominal)
