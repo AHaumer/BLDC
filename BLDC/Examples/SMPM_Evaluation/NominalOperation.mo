@@ -1,6 +1,5 @@
-within BLDC.Examples;
-model SMPM_NominalOperation
-  "PermanentMagnetSynchronousMachine fed by current source"
+within BLDC.Examples.SMPM_Evaluation;
+model NominalOperation "PermanentMagnetSynchronousMachine fed by current source"
   extends Modelica.Icons.Example;
   Modelica.Magnetic.FundamentalWave.BasicMachines.SynchronousMachines.SM_PermanentMagnet
     smpm(
@@ -78,7 +77,8 @@ model SMPM_NominalOperation
   Modelica.Mechanics.Rotational.Sources.ConstantSpeed constantSpeed(w_fixed=
         smpmData.wNominal)
     annotation (Placement(transformation(extent={{80,-30},{60,-10}})));
-  parameter ParameterRecords.SmpmData smpmData
+  parameter ParameterRecords.Smpm1FT7102
+                                      smpmData
     "Synchronous machine data"
     annotation (Placement(transformation(extent={{-20,-60},{0,-40}})));
   Modelica.Electrical.Polyphase.Basic.Star starM(m=smpmData.mSystems)
@@ -129,4 +129,4 @@ A synchronous machine with permanent magnets is fed by nominal q-current at nomi
 to verify nominal torque and nominal voltage.
 </p>
 </html>"));
-end SMPM_NominalOperation;
+end NominalOperation;

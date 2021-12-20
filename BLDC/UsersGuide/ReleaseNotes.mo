@@ -3,7 +3,10 @@ class ReleaseNotes "Release Notes"
   extends Modelica.Icons.ReleaseNotes;
   annotation (Documentation(info="<html>
 
-<h4>v1.9.0 2021-12-17</h4>
+<h4>v2.0.0 2021-12-20</h4>
+<p>enhanced test examples to evaluate parameters of a permanent magnet synchronous machine</p>
+
+<h4>v1.9.0 2021-12-18</h4>
 <p>adapted HallTimeSpan to translate with OM</p>
 
 <h4>v1.8.0 2021-12-17</h4>
